@@ -79,6 +79,13 @@ export type EnumGameStatusFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumGameStatusFilter<$PrismaModel> | $Enums.GameStatus
 }
 
+export type EnumGameVisibilityFilter<$PrismaModel = never> = {
+  equals?: $Enums.GameVisibility | Prisma.EnumGameVisibilityFieldRefInput<$PrismaModel>
+  in?: $Enums.GameVisibility[] | Prisma.ListEnumGameVisibilityFieldRefInput<$PrismaModel>
+  notIn?: $Enums.GameVisibility[] | Prisma.ListEnumGameVisibilityFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumGameVisibilityFilter<$PrismaModel> | $Enums.GameVisibility
+}
+
 export type StringNullableFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
@@ -136,6 +143,16 @@ export type EnumGameStatusWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumGameStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumGameStatusFilter<$PrismaModel>
+}
+
+export type EnumGameVisibilityWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.GameVisibility | Prisma.EnumGameVisibilityFieldRefInput<$PrismaModel>
+  in?: $Enums.GameVisibility[] | Prisma.ListEnumGameVisibilityFieldRefInput<$PrismaModel>
+  notIn?: $Enums.GameVisibility[] | Prisma.ListEnumGameVisibilityFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumGameVisibilityWithAggregatesFilter<$PrismaModel> | $Enums.GameVisibility
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumGameVisibilityFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumGameVisibilityFilter<$PrismaModel>
 }
 
 export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -272,6 +289,13 @@ export type NestedEnumGameStatusFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumGameStatusFilter<$PrismaModel> | $Enums.GameStatus
 }
 
+export type NestedEnumGameVisibilityFilter<$PrismaModel = never> = {
+  equals?: $Enums.GameVisibility | Prisma.EnumGameVisibilityFieldRefInput<$PrismaModel>
+  in?: $Enums.GameVisibility[] | Prisma.ListEnumGameVisibilityFieldRefInput<$PrismaModel>
+  notIn?: $Enums.GameVisibility[] | Prisma.ListEnumGameVisibilityFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumGameVisibilityFilter<$PrismaModel> | $Enums.GameVisibility
+}
+
 export type NestedStringNullableFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
@@ -312,6 +336,16 @@ export type NestedEnumGameStatusWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumGameStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumGameStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumGameVisibilityWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.GameVisibility | Prisma.EnumGameVisibilityFieldRefInput<$PrismaModel>
+  in?: $Enums.GameVisibility[] | Prisma.ListEnumGameVisibilityFieldRefInput<$PrismaModel>
+  notIn?: $Enums.GameVisibility[] | Prisma.ListEnumGameVisibilityFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumGameVisibilityWithAggregatesFilter<$PrismaModel> | $Enums.GameVisibility
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumGameVisibilityFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumGameVisibilityFilter<$PrismaModel>
 }
 
 export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {

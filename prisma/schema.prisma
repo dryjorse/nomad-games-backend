@@ -26,22 +26,23 @@ model Queue {
 }
 
 model Game {
-  id                String     @id @default(ulid())
-  status            GameStatus @default(WAITING)
+  id                String         @id @default(ulid())
+  status            GameStatus     @default(WAITING)
+  visibility        GameVisibility @default(PUBLIC)
   firstPlayerId     String 
-  firstPlayer       User       @relation("FirstPlayer", fields: [firstPlayerId], references: [id])
+  firstPlayer       User           @relation("FirstPlayer", fields: [firstPlayerId], references: [id])
   secondPlayerId    String? 
-  secondPlayer      User?      @relation("SecondPlayer", fields: [secondPlayerId], references: [id])
-  board             Int[]      @default([9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9])
+  secondPlayer      User?          @relation("SecondPlayer", fields: [secondPlayerId], references: [id])
+  board             Int[]          @default([9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9])
   firstAce          Int?
   secondAce         Int?
-  firstPlayerRole   GameRole   @default(WHITE)
-  currentTurn       GameRole   @default(WHITE)
-  firstPlayerScore  Int        @default(0)
-  secondPlayerScore Int        @default(0)
+  firstPlayerRole   GameRole       @default(WHITE)
+  currentTurn       GameRole       @default(WHITE)
+  firstPlayerScore  Int            @default(0)
+  secondPlayerScore Int            @default(0) 
   winnerId          String?
-  createdAt         DateTime   @default(now())
-  updatedAt         DateTime   @updatedAt
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
 }
 
 enum GameStatus {
@@ -53,4 +54,10 @@ enum GameStatus {
 enum GameRole {
   BLACK
   WHITE
+}
+
+enum GameVisibility {
+  PUBLIC
+  PRIVATE
+  FOR_FRIENDS
 }

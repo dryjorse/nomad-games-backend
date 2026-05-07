@@ -95,6 +95,7 @@ export type QueueScalarFieldEnum = (typeof QueueScalarFieldEnum)[keyof typeof Qu
 export const GameScalarFieldEnum = {
   id: 'id',
   status: 'status',
+  visibility: 'visibility',
   firstPlayerId: 'firstPlayerId',
   secondPlayerId: 'secondPlayerId',
   board: 'board',

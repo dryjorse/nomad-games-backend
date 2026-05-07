@@ -45,6 +45,7 @@ export type GameSumAggregateOutputType = {
 export type GameMinAggregateOutputType = {
   id: string | null
   status: $Enums.GameStatus | null
+  visibility: $Enums.GameVisibility | null
   firstPlayerId: string | null
   secondPlayerId: string | null
   firstAce: number | null
@@ -61,6 +62,7 @@ export type GameMinAggregateOutputType = {
 export type GameMaxAggregateOutputType = {
   id: string | null
   status: $Enums.GameStatus | null
+  visibility: $Enums.GameVisibility | null
   firstPlayerId: string | null
   secondPlayerId: string | null
   firstAce: number | null
@@ -77,6 +79,7 @@ export type GameMaxAggregateOutputType = {
 export type GameCountAggregateOutputType = {
   id: number
   status: number
+  visibility: number
   firstPlayerId: number
   secondPlayerId: number
   board: number
@@ -112,6 +115,7 @@ export type GameSumAggregateInputType = {
 export type GameMinAggregateInputType = {
   id?: true
   status?: true
+  visibility?: true
   firstPlayerId?: true
   secondPlayerId?: true
   firstAce?: true
@@ -128,6 +132,7 @@ export type GameMinAggregateInputType = {
 export type GameMaxAggregateInputType = {
   id?: true
   status?: true
+  visibility?: true
   firstPlayerId?: true
   secondPlayerId?: true
   firstAce?: true
@@ -144,6 +149,7 @@ export type GameMaxAggregateInputType = {
 export type GameCountAggregateInputType = {
   id?: true
   status?: true
+  visibility?: true
   firstPlayerId?: true
   secondPlayerId?: true
   board?: true
@@ -248,6 +254,7 @@ export type GameGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type GameGroupByOutputType = {
   id: string
   status: $Enums.GameStatus
+  visibility: $Enums.GameVisibility
   firstPlayerId: string
   secondPlayerId: string | null
   board: number[]
@@ -288,6 +295,7 @@ export type GameWhereInput = {
   NOT?: Prisma.GameWhereInput | Prisma.GameWhereInput[]
   id?: Prisma.StringFilter<"Game"> | string
   status?: Prisma.EnumGameStatusFilter<"Game"> | $Enums.GameStatus
+  visibility?: Prisma.EnumGameVisibilityFilter<"Game"> | $Enums.GameVisibility
   firstPlayerId?: Prisma.StringFilter<"Game"> | string
   secondPlayerId?: Prisma.StringNullableFilter<"Game"> | string | null
   board?: Prisma.IntNullableListFilter<"Game">
@@ -307,6 +315,7 @@ export type GameWhereInput = {
 export type GameOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  visibility?: Prisma.SortOrder
   firstPlayerId?: Prisma.SortOrder
   secondPlayerId?: Prisma.SortOrderInput | Prisma.SortOrder
   board?: Prisma.SortOrder
@@ -329,6 +338,7 @@ export type GameWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.GameWhereInput[]
   NOT?: Prisma.GameWhereInput | Prisma.GameWhereInput[]
   status?: Prisma.EnumGameStatusFilter<"Game"> | $Enums.GameStatus
+  visibility?: Prisma.EnumGameVisibilityFilter<"Game"> | $Enums.GameVisibility
   firstPlayerId?: Prisma.StringFilter<"Game"> | string
   secondPlayerId?: Prisma.StringNullableFilter<"Game"> | string | null
   board?: Prisma.IntNullableListFilter<"Game">
@@ -348,6 +358,7 @@ export type GameWhereUniqueInput = Prisma.AtLeast<{
 export type GameOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  visibility?: Prisma.SortOrder
   firstPlayerId?: Prisma.SortOrder
   secondPlayerId?: Prisma.SortOrderInput | Prisma.SortOrder
   board?: Prisma.SortOrder
@@ -373,6 +384,7 @@ export type GameScalarWhereWithAggregatesInput = {
   NOT?: Prisma.GameScalarWhereWithAggregatesInput | Prisma.GameScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Game"> | string
   status?: Prisma.EnumGameStatusWithAggregatesFilter<"Game"> | $Enums.GameStatus
+  visibility?: Prisma.EnumGameVisibilityWithAggregatesFilter<"Game"> | $Enums.GameVisibility
   firstPlayerId?: Prisma.StringWithAggregatesFilter<"Game"> | string
   secondPlayerId?: Prisma.StringNullableWithAggregatesFilter<"Game"> | string | null
   board?: Prisma.IntNullableListFilter<"Game">
@@ -390,6 +402,7 @@ export type GameScalarWhereWithAggregatesInput = {
 export type GameCreateInput = {
   id?: string
   status?: $Enums.GameStatus
+  visibility?: $Enums.GameVisibility
   board?: Prisma.GameCreateboardInput | number[]
   firstAce?: number | null
   secondAce?: number | null
@@ -407,6 +420,7 @@ export type GameCreateInput = {
 export type GameUncheckedCreateInput = {
   id?: string
   status?: $Enums.GameStatus
+  visibility?: $Enums.GameVisibility
   firstPlayerId: string
   secondPlayerId?: string | null
   board?: Prisma.GameCreateboardInput | number[]
@@ -424,6 +438,7 @@ export type GameUncheckedCreateInput = {
 export type GameUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumGameStatusFieldUpdateOperationsInput | $Enums.GameStatus
+  visibility?: Prisma.EnumGameVisibilityFieldUpdateOperationsInput | $Enums.GameVisibility
   board?: Prisma.GameUpdateboardInput | number[]
   firstAce?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   secondAce?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -441,6 +456,7 @@ export type GameUpdateInput = {
 export type GameUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumGameStatusFieldUpdateOperationsInput | $Enums.GameStatus
+  visibility?: Prisma.EnumGameVisibilityFieldUpdateOperationsInput | $Enums.GameVisibility
   firstPlayerId?: Prisma.StringFieldUpdateOperationsInput | string
   secondPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   board?: Prisma.GameUpdateboardInput | number[]
@@ -458,6 +474,7 @@ export type GameUncheckedUpdateInput = {
 export type GameCreateManyInput = {
   id?: string
   status?: $Enums.GameStatus
+  visibility?: $Enums.GameVisibility
   firstPlayerId: string
   secondPlayerId?: string | null
   board?: Prisma.GameCreateboardInput | number[]
@@ -475,6 +492,7 @@ export type GameCreateManyInput = {
 export type GameUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumGameStatusFieldUpdateOperationsInput | $Enums.GameStatus
+  visibility?: Prisma.EnumGameVisibilityFieldUpdateOperationsInput | $Enums.GameVisibility
   board?: Prisma.GameUpdateboardInput | number[]
   firstAce?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   secondAce?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -490,6 +508,7 @@ export type GameUpdateManyMutationInput = {
 export type GameUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumGameStatusFieldUpdateOperationsInput | $Enums.GameStatus
+  visibility?: Prisma.EnumGameVisibilityFieldUpdateOperationsInput | $Enums.GameVisibility
   firstPlayerId?: Prisma.StringFieldUpdateOperationsInput | string
   secondPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   board?: Prisma.GameUpdateboardInput | number[]
@@ -525,6 +544,7 @@ export type IntNullableListFilter<$PrismaModel = never> = {
 export type GameCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  visibility?: Prisma.SortOrder
   firstPlayerId?: Prisma.SortOrder
   secondPlayerId?: Prisma.SortOrder
   board?: Prisma.SortOrder
@@ -550,6 +570,7 @@ export type GameAvgOrderByAggregateInput = {
 export type GameMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  visibility?: Prisma.SortOrder
   firstPlayerId?: Prisma.SortOrder
   secondPlayerId?: Prisma.SortOrder
   firstAce?: Prisma.SortOrder
@@ -566,6 +587,7 @@ export type GameMaxOrderByAggregateInput = {
 export type GameMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  visibility?: Prisma.SortOrder
   firstPlayerId?: Prisma.SortOrder
   secondPlayerId?: Prisma.SortOrder
   firstAce?: Prisma.SortOrder
@@ -679,6 +701,10 @@ export type EnumGameStatusFieldUpdateOperationsInput = {
   set?: $Enums.GameStatus
 }
 
+export type EnumGameVisibilityFieldUpdateOperationsInput = {
+  set?: $Enums.GameVisibility
+}
+
 export type GameUpdateboardInput = {
   set?: number[]
   push?: number | number[]
@@ -711,6 +737,7 @@ export type NullableStringFieldUpdateOperationsInput = {
 export type GameCreateWithoutFirstPlayerInput = {
   id?: string
   status?: $Enums.GameStatus
+  visibility?: $Enums.GameVisibility
   board?: Prisma.GameCreateboardInput | number[]
   firstAce?: number | null
   secondAce?: number | null
@@ -727,6 +754,7 @@ export type GameCreateWithoutFirstPlayerInput = {
 export type GameUncheckedCreateWithoutFirstPlayerInput = {
   id?: string
   status?: $Enums.GameStatus
+  visibility?: $Enums.GameVisibility
   secondPlayerId?: string | null
   board?: Prisma.GameCreateboardInput | number[]
   firstAce?: number | null
@@ -753,6 +781,7 @@ export type GameCreateManyFirstPlayerInputEnvelope = {
 export type GameCreateWithoutSecondPlayerInput = {
   id?: string
   status?: $Enums.GameStatus
+  visibility?: $Enums.GameVisibility
   board?: Prisma.GameCreateboardInput | number[]
   firstAce?: number | null
   secondAce?: number | null
@@ -769,6 +798,7 @@ export type GameCreateWithoutSecondPlayerInput = {
 export type GameUncheckedCreateWithoutSecondPlayerInput = {
   id?: string
   status?: $Enums.GameStatus
+  visibility?: $Enums.GameVisibility
   firstPlayerId: string
   board?: Prisma.GameCreateboardInput | number[]
   firstAce?: number | null
@@ -814,6 +844,7 @@ export type GameScalarWhereInput = {
   NOT?: Prisma.GameScalarWhereInput | Prisma.GameScalarWhereInput[]
   id?: Prisma.StringFilter<"Game"> | string
   status?: Prisma.EnumGameStatusFilter<"Game"> | $Enums.GameStatus
+  visibility?: Prisma.EnumGameVisibilityFilter<"Game"> | $Enums.GameVisibility
   firstPlayerId?: Prisma.StringFilter<"Game"> | string
   secondPlayerId?: Prisma.StringNullableFilter<"Game"> | string | null
   board?: Prisma.IntNullableListFilter<"Game">
@@ -847,6 +878,7 @@ export type GameUpdateManyWithWhereWithoutSecondPlayerInput = {
 export type GameCreateManyFirstPlayerInput = {
   id?: string
   status?: $Enums.GameStatus
+  visibility?: $Enums.GameVisibility
   secondPlayerId?: string | null
   board?: Prisma.GameCreateboardInput | number[]
   firstAce?: number | null
@@ -863,6 +895,7 @@ export type GameCreateManyFirstPlayerInput = {
 export type GameCreateManySecondPlayerInput = {
   id?: string
   status?: $Enums.GameStatus
+  visibility?: $Enums.GameVisibility
   firstPlayerId: string
   board?: Prisma.GameCreateboardInput | number[]
   firstAce?: number | null
@@ -879,6 +912,7 @@ export type GameCreateManySecondPlayerInput = {
 export type GameUpdateWithoutFirstPlayerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumGameStatusFieldUpdateOperationsInput | $Enums.GameStatus
+  visibility?: Prisma.EnumGameVisibilityFieldUpdateOperationsInput | $Enums.GameVisibility
   board?: Prisma.GameUpdateboardInput | number[]
   firstAce?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   secondAce?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -895,6 +929,7 @@ export type GameUpdateWithoutFirstPlayerInput = {
 export type GameUncheckedUpdateWithoutFirstPlayerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumGameStatusFieldUpdateOperationsInput | $Enums.GameStatus
+  visibility?: Prisma.EnumGameVisibilityFieldUpdateOperationsInput | $Enums.GameVisibility
   secondPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   board?: Prisma.GameUpdateboardInput | number[]
   firstAce?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -911,6 +946,7 @@ export type GameUncheckedUpdateWithoutFirstPlayerInput = {
 export type GameUncheckedUpdateManyWithoutFirstPlayerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumGameStatusFieldUpdateOperationsInput | $Enums.GameStatus
+  visibility?: Prisma.EnumGameVisibilityFieldUpdateOperationsInput | $Enums.GameVisibility
   secondPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   board?: Prisma.GameUpdateboardInput | number[]
   firstAce?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -927,6 +963,7 @@ export type GameUncheckedUpdateManyWithoutFirstPlayerInput = {
 export type GameUpdateWithoutSecondPlayerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumGameStatusFieldUpdateOperationsInput | $Enums.GameStatus
+  visibility?: Prisma.EnumGameVisibilityFieldUpdateOperationsInput | $Enums.GameVisibility
   board?: Prisma.GameUpdateboardInput | number[]
   firstAce?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   secondAce?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -943,6 +980,7 @@ export type GameUpdateWithoutSecondPlayerInput = {
 export type GameUncheckedUpdateWithoutSecondPlayerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumGameStatusFieldUpdateOperationsInput | $Enums.GameStatus
+  visibility?: Prisma.EnumGameVisibilityFieldUpdateOperationsInput | $Enums.GameVisibility
   firstPlayerId?: Prisma.StringFieldUpdateOperationsInput | string
   board?: Prisma.GameUpdateboardInput | number[]
   firstAce?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -959,6 +997,7 @@ export type GameUncheckedUpdateWithoutSecondPlayerInput = {
 export type GameUncheckedUpdateManyWithoutSecondPlayerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumGameStatusFieldUpdateOperationsInput | $Enums.GameStatus
+  visibility?: Prisma.EnumGameVisibilityFieldUpdateOperationsInput | $Enums.GameVisibility
   firstPlayerId?: Prisma.StringFieldUpdateOperationsInput | string
   board?: Prisma.GameUpdateboardInput | number[]
   firstAce?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -977,6 +1016,7 @@ export type GameUncheckedUpdateManyWithoutSecondPlayerInput = {
 export type GameSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   status?: boolean
+  visibility?: boolean
   firstPlayerId?: boolean
   secondPlayerId?: boolean
   board?: boolean
@@ -996,6 +1036,7 @@ export type GameSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 export type GameSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   status?: boolean
+  visibility?: boolean
   firstPlayerId?: boolean
   secondPlayerId?: boolean
   board?: boolean
@@ -1015,6 +1056,7 @@ export type GameSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 export type GameSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   status?: boolean
+  visibility?: boolean
   firstPlayerId?: boolean
   secondPlayerId?: boolean
   board?: boolean
@@ -1034,6 +1076,7 @@ export type GameSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 export type GameSelectScalar = {
   id?: boolean
   status?: boolean
+  visibility?: boolean
   firstPlayerId?: boolean
   secondPlayerId?: boolean
   board?: boolean
@@ -1048,7 +1091,7 @@ export type GameSelectScalar = {
   updatedAt?: boolean
 }
 
-export type GameOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "status" | "firstPlayerId" | "secondPlayerId" | "board" | "firstAce" | "secondAce" | "firstPlayerRole" | "currentTurn" | "firstPlayerScore" | "secondPlayerScore" | "winnerId" | "createdAt" | "updatedAt", ExtArgs["result"]["game"]>
+export type GameOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "status" | "visibility" | "firstPlayerId" | "secondPlayerId" | "board" | "firstAce" | "secondAce" | "firstPlayerRole" | "currentTurn" | "firstPlayerScore" | "secondPlayerScore" | "winnerId" | "createdAt" | "updatedAt", ExtArgs["result"]["game"]>
 export type GameInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   firstPlayer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   secondPlayer?: boolean | Prisma.Game$secondPlayerArgs<ExtArgs>
@@ -1071,6 +1114,7 @@ export type $GamePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     status: $Enums.GameStatus
+    visibility: $Enums.GameVisibility
     firstPlayerId: string
     secondPlayerId: string | null
     board: number[]
@@ -1510,6 +1554,7 @@ export interface Prisma__GameClient<T, Null = never, ExtArgs extends runtime.Typ
 export interface GameFieldRefs {
   readonly id: Prisma.FieldRef<"Game", 'String'>
   readonly status: Prisma.FieldRef<"Game", 'GameStatus'>
+  readonly visibility: Prisma.FieldRef<"Game", 'GameVisibility'>
   readonly firstPlayerId: Prisma.FieldRef<"Game", 'String'>
   readonly secondPlayerId: Prisma.FieldRef<"Game", 'String'>
   readonly board: Prisma.FieldRef<"Game", 'Int[]'>

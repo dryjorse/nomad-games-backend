@@ -1,9 +1,13 @@
 import { ConflictException, Injectable } from '@nestjs/common';
+import { AppGateway } from 'src/gateway/app.gateway';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class QueueService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private appGateway: AppGateway,
+  ) {}
 
   async joinQueue(userId: string) {
     const user = await this.prisma.user.findUnique({
@@ -46,7 +50,7 @@ export class QueueService {
     if (waitingGame)
       return this.prisma.game.update({
         where: { id: waitingGame.id },
-        data: { secondPlayerId: userId, status: 'ACTIVE' },
+        data: { secondPlayerId: userId },
       });
 
     await this.prisma.queue.create({ data: { userId } });

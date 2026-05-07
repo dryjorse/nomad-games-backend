@@ -8,9 +8,9 @@ import { Server, Socket } from 'socket.io';
 import { JwtService } from '@nestjs/jwt';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 
-@WebSocketGateway({ namespace: '/queue', cors: { origin: '*' } })
+@WebSocketGateway({ cors: { origin: '*' } })
 @Injectable()
-export class QueueGateway implements OnGatewayConnection, OnGatewayDisconnect {
+export class AppGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   server: Server;
 
@@ -19,14 +19,11 @@ export class QueueGateway implements OnGatewayConnection, OnGatewayDisconnect {
   async handleConnection(client: Socket) {
     try {
       const token = client.handshake.headers.token + '';
-
       if (!token) throw new UnauthorizedException('Токен не был предоставлен');
 
       const payload = this.jwtService.verify(token);
-
       client.data.user = payload;
       client.data.userId = payload.sub || payload.id;
-
       client.join(`user_${client.data.userId}`);
     } catch (err) {
       client.disconnect(true);
@@ -41,9 +38,7 @@ export class QueueGateway implements OnGatewayConnection, OnGatewayDisconnect {
     payload: any,
   ) {
     const ids = Array.isArray(userIds) ? userIds : [userIds];
-    console.log(ids);
     if (ids.length === 0) return;
-
     const rooms = ids.map((id) => `user_${id}`);
     this.server.to(rooms).emit(event, payload);
   }

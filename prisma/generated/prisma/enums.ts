@@ -24,3 +24,12 @@ export const GameRole = {
 } as const
 
 export type GameRole = (typeof GameRole)[keyof typeof GameRole]
+
+
+export const GameVisibility = {
+  PUBLIC: 'PUBLIC',
+  PRIVATE: 'PRIVATE',
+  FOR_FRIENDS: 'FOR_FRIENDS'
+} as const
+
+export type GameVisibility = (typeof GameVisibility)[keyof typeof GameVisibility]
