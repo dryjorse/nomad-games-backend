@@ -1,7 +1,7 @@
 import { Controller, Post, Req, UseGuards } from '@nestjs/common';
 import { QueueService } from './queue.service';
-import { AuthGuard } from 'src/auth/auth.guard';
 import { IRequest } from 'src/common/types';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('queue')
 export class QueueController {

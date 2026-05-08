@@ -8,14 +8,29 @@ datasource db {
 }
 
 model User {
-  id              String   @id @default(uuid())
-  email           String   @unique
-  password        String
-  username        String   @unique
-  createdAt       DateTime @default(now())
-  gamesAsFirst    Game[]   @relation("FirstPlayer")
-  gamesAsSecond   Game[]   @relation("SecondPlayer")
-  queue           Queue?
+  id                   String         @id @default(uuid())
+  email                String         @unique
+  password             String
+  username             String         @unique
+  createdAt            DateTime       @default(now())
+  gamesAsFirst         Game[]         @relation("FirstPlayer")
+  gamesAsSecond        Game[]         @relation("SecondPlayer")
+  notifications        Notification[] @relation("User") 
+  relatedNotifications Notification[] @relation("RelatedUser")
+  queue                Queue?
+  friends              Friendship[]   @relation("UserFriends")
+  friendOf             Friendship[]   @relation("FriendOf")
+}
+
+model Friendship {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation("UserFriends", fields: [userId], references: [id])
+  friendId  String
+  friend    User     @relation("FriendOf", fields: [friendId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([userId, friendId]) 
 }
 
 model Queue {
@@ -26,23 +41,24 @@ model Queue {
 }
 
 model Game {
-  id                String         @id @default(ulid())
-  status            GameStatus     @default(WAITING)
-  visibility        GameVisibility @default(PUBLIC)
-  firstPlayerId     String 
-  firstPlayer       User           @relation("FirstPlayer", fields: [firstPlayerId], references: [id])
-  secondPlayerId    String? 
-  secondPlayer      User?          @relation("SecondPlayer", fields: [secondPlayerId], references: [id])
-  board             Int[]          @default([9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9])
-  firstAce          Int?
-  secondAce         Int?
-  firstPlayerRole   GameRole       @default(WHITE)
-  currentTurn       GameRole       @default(WHITE)
-  firstPlayerScore  Int            @default(0)
-  secondPlayerScore Int            @default(0) 
-  winnerId          String?
-  createdAt         DateTime       @default(now())
-  updatedAt         DateTime       @updatedAt
+  id                   String         @id @default(ulid())
+  status               GameStatus     @default(WAITING)
+  visibility           GameVisibility @default(PUBLIC)
+  firstPlayerId        String 
+  firstPlayer          User           @relation("FirstPlayer", fields: [firstPlayerId], references: [id])
+  secondPlayerId       String? 
+  secondPlayer         User?          @relation("SecondPlayer", fields: [secondPlayerId], references: [id])
+  board                Int[]          @default([9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9])
+  firstAce             Int?
+  secondAce            Int?
+  firstPlayerRole      GameRole       @default(WHITE)
+  currentTurn          GameRole       @default(WHITE)
+  firstPlayerScore     Int            @default(0)
+  secondPlayerScore    Int            @default(0) 
+  winnerId             String?
+  relatedNotifications Notification[] @relation()
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt
 }
 
 enum GameStatus {
@@ -59,5 +75,22 @@ enum GameRole {
 enum GameVisibility {
   PUBLIC
   PRIVATE
-  FOR_FRIENDS
+}
+
+model Notification {
+  id            String           @id @default(uuid())
+  userId        String
+  user          User             @relation("User", fields: [userId], references: [id])
+  type          NotificationType
+  isRead        Boolean          @default(false)
+  relatedUserId String?
+  relatedUser   User?            @relation("RelatedUser", fields: [relatedUserId], references: [id])
+  gameId        String?
+  game          Game?            @relation(fields: [gameId], references: [id])
+  createdAt     DateTime         @default(now())
+}
+
+enum NotificationType {
+  GAME_INVITATION
+  FRIEND_REQUEST
 }

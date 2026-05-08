@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
-import { AuthModule } from './auth/auth.module';
-import { QueueModule } from './queue/queue.module';
-import { GameModule } from './game/game.module';
+import { QueueModule } from './apps/queue/queue.module';
+import { GameModule } from './apps/game/game.module';
 import { GatewayModule } from './gateway/gateway.module';
+import { AuthModule } from './apps/auth/auth.module';
+import { NotificationModule } from './apps/notification/notification.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { GatewayModule } from './gateway/gateway.module';
     AuthModule,
     QueueModule,
     GameModule,
+    NotificationModule,
   ],
 })
 export class AppModule {}

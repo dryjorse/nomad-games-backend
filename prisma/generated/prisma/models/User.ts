@@ -184,7 +184,11 @@ export type UserWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   gamesAsFirst?: Prisma.GameListRelationFilter
   gamesAsSecond?: Prisma.GameListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
+  relatedNotifications?: Prisma.NotificationListRelationFilter
   queue?: Prisma.XOR<Prisma.QueueNullableScalarRelationFilter, Prisma.QueueWhereInput> | null
+  friends?: Prisma.FriendshipListRelationFilter
+  friendOf?: Prisma.FriendshipListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -195,7 +199,11 @@ export type UserOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   gamesAsFirst?: Prisma.GameOrderByRelationAggregateInput
   gamesAsSecond?: Prisma.GameOrderByRelationAggregateInput
+  notifications?: Prisma.NotificationOrderByRelationAggregateInput
+  relatedNotifications?: Prisma.NotificationOrderByRelationAggregateInput
   queue?: Prisma.QueueOrderByWithRelationInput
+  friends?: Prisma.FriendshipOrderByRelationAggregateInput
+  friendOf?: Prisma.FriendshipOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -209,7 +217,11 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   gamesAsFirst?: Prisma.GameListRelationFilter
   gamesAsSecond?: Prisma.GameListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
+  relatedNotifications?: Prisma.NotificationListRelationFilter
   queue?: Prisma.XOR<Prisma.QueueNullableScalarRelationFilter, Prisma.QueueWhereInput> | null
+  friends?: Prisma.FriendshipListRelationFilter
+  friendOf?: Prisma.FriendshipListRelationFilter
 }, "id" | "email" | "username">
 
 export type UserOrderByWithAggregationInput = {
@@ -242,7 +254,11 @@ export type UserCreateInput = {
   createdAt?: Date | string
   gamesAsFirst?: Prisma.GameCreateNestedManyWithoutFirstPlayerInput
   gamesAsSecond?: Prisma.GameCreateNestedManyWithoutSecondPlayerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  relatedNotifications?: Prisma.NotificationCreateNestedManyWithoutRelatedUserInput
   queue?: Prisma.QueueCreateNestedOneWithoutUserInput
+  friends?: Prisma.FriendshipCreateNestedManyWithoutUserInput
+  friendOf?: Prisma.FriendshipCreateNestedManyWithoutFriendInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -253,7 +269,11 @@ export type UserUncheckedCreateInput = {
   createdAt?: Date | string
   gamesAsFirst?: Prisma.GameUncheckedCreateNestedManyWithoutFirstPlayerInput
   gamesAsSecond?: Prisma.GameUncheckedCreateNestedManyWithoutSecondPlayerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  relatedNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRelatedUserInput
   queue?: Prisma.QueueUncheckedCreateNestedOneWithoutUserInput
+  friends?: Prisma.FriendshipUncheckedCreateNestedManyWithoutUserInput
+  friendOf?: Prisma.FriendshipUncheckedCreateNestedManyWithoutFriendInput
 }
 
 export type UserUpdateInput = {
@@ -264,7 +284,11 @@ export type UserUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gamesAsFirst?: Prisma.GameUpdateManyWithoutFirstPlayerNestedInput
   gamesAsSecond?: Prisma.GameUpdateManyWithoutSecondPlayerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  relatedNotifications?: Prisma.NotificationUpdateManyWithoutRelatedUserNestedInput
   queue?: Prisma.QueueUpdateOneWithoutUserNestedInput
+  friends?: Prisma.FriendshipUpdateManyWithoutUserNestedInput
+  friendOf?: Prisma.FriendshipUpdateManyWithoutFriendNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -275,7 +299,11 @@ export type UserUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gamesAsFirst?: Prisma.GameUncheckedUpdateManyWithoutFirstPlayerNestedInput
   gamesAsSecond?: Prisma.GameUncheckedUpdateManyWithoutSecondPlayerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  relatedNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutRelatedUserNestedInput
   queue?: Prisma.QueueUncheckedUpdateOneWithoutUserNestedInput
+  friends?: Prisma.FriendshipUncheckedUpdateManyWithoutUserNestedInput
+  friendOf?: Prisma.FriendshipUncheckedUpdateManyWithoutFriendNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -344,6 +372,34 @@ export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
 
+export type UserCreateNestedOneWithoutFriendsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFriendsInput, Prisma.UserUncheckedCreateWithoutFriendsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFriendsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutFriendOfInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFriendOfInput, Prisma.UserUncheckedCreateWithoutFriendOfInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFriendOfInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutFriendsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFriendsInput, Prisma.UserUncheckedCreateWithoutFriendsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFriendsInput
+  upsert?: Prisma.UserUpsertWithoutFriendsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFriendsInput, Prisma.UserUpdateWithoutFriendsInput>, Prisma.UserUncheckedUpdateWithoutFriendsInput>
+}
+
+export type UserUpdateOneRequiredWithoutFriendOfNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFriendOfInput, Prisma.UserUncheckedCreateWithoutFriendOfInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFriendOfInput
+  upsert?: Prisma.UserUpsertWithoutFriendOfInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFriendOfInput, Prisma.UserUpdateWithoutFriendOfInput>, Prisma.UserUncheckedUpdateWithoutFriendOfInput>
+}
+
 export type UserCreateNestedOneWithoutQueueInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutQueueInput, Prisma.UserUncheckedCreateWithoutQueueInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutQueueInput
@@ -388,6 +444,180 @@ export type UserUpdateOneWithoutGamesAsSecondNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutGamesAsSecondInput, Prisma.UserUpdateWithoutGamesAsSecondInput>, Prisma.UserUncheckedUpdateWithoutGamesAsSecondInput>
 }
 
+export type UserCreateNestedOneWithoutNotificationsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutRelatedNotificationsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutRelatedNotificationsInput, Prisma.UserUncheckedCreateWithoutRelatedNotificationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutRelatedNotificationsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutNotificationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
+  upsert?: Prisma.UserUpsertWithoutNotificationsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotificationsInput, Prisma.UserUpdateWithoutNotificationsInput>, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+}
+
+export type UserUpdateOneWithoutRelatedNotificationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutRelatedNotificationsInput, Prisma.UserUncheckedCreateWithoutRelatedNotificationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutRelatedNotificationsInput
+  upsert?: Prisma.UserUpsertWithoutRelatedNotificationsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutRelatedNotificationsInput, Prisma.UserUpdateWithoutRelatedNotificationsInput>, Prisma.UserUncheckedUpdateWithoutRelatedNotificationsInput>
+}
+
+export type UserCreateWithoutFriendsInput = {
+  id?: string
+  email: string
+  password: string
+  username: string
+  createdAt?: Date | string
+  gamesAsFirst?: Prisma.GameCreateNestedManyWithoutFirstPlayerInput
+  gamesAsSecond?: Prisma.GameCreateNestedManyWithoutSecondPlayerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  relatedNotifications?: Prisma.NotificationCreateNestedManyWithoutRelatedUserInput
+  queue?: Prisma.QueueCreateNestedOneWithoutUserInput
+  friendOf?: Prisma.FriendshipCreateNestedManyWithoutFriendInput
+}
+
+export type UserUncheckedCreateWithoutFriendsInput = {
+  id?: string
+  email: string
+  password: string
+  username: string
+  createdAt?: Date | string
+  gamesAsFirst?: Prisma.GameUncheckedCreateNestedManyWithoutFirstPlayerInput
+  gamesAsSecond?: Prisma.GameUncheckedCreateNestedManyWithoutSecondPlayerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  relatedNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRelatedUserInput
+  queue?: Prisma.QueueUncheckedCreateNestedOneWithoutUserInput
+  friendOf?: Prisma.FriendshipUncheckedCreateNestedManyWithoutFriendInput
+}
+
+export type UserCreateOrConnectWithoutFriendsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutFriendsInput, Prisma.UserUncheckedCreateWithoutFriendsInput>
+}
+
+export type UserCreateWithoutFriendOfInput = {
+  id?: string
+  email: string
+  password: string
+  username: string
+  createdAt?: Date | string
+  gamesAsFirst?: Prisma.GameCreateNestedManyWithoutFirstPlayerInput
+  gamesAsSecond?: Prisma.GameCreateNestedManyWithoutSecondPlayerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  relatedNotifications?: Prisma.NotificationCreateNestedManyWithoutRelatedUserInput
+  queue?: Prisma.QueueCreateNestedOneWithoutUserInput
+  friends?: Prisma.FriendshipCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutFriendOfInput = {
+  id?: string
+  email: string
+  password: string
+  username: string
+  createdAt?: Date | string
+  gamesAsFirst?: Prisma.GameUncheckedCreateNestedManyWithoutFirstPlayerInput
+  gamesAsSecond?: Prisma.GameUncheckedCreateNestedManyWithoutSecondPlayerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  relatedNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRelatedUserInput
+  queue?: Prisma.QueueUncheckedCreateNestedOneWithoutUserInput
+  friends?: Prisma.FriendshipUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutFriendOfInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutFriendOfInput, Prisma.UserUncheckedCreateWithoutFriendOfInput>
+}
+
+export type UserUpsertWithoutFriendsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutFriendsInput, Prisma.UserUncheckedUpdateWithoutFriendsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutFriendsInput, Prisma.UserUncheckedCreateWithoutFriendsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutFriendsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutFriendsInput, Prisma.UserUncheckedUpdateWithoutFriendsInput>
+}
+
+export type UserUpdateWithoutFriendsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  gamesAsFirst?: Prisma.GameUpdateManyWithoutFirstPlayerNestedInput
+  gamesAsSecond?: Prisma.GameUpdateManyWithoutSecondPlayerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  relatedNotifications?: Prisma.NotificationUpdateManyWithoutRelatedUserNestedInput
+  queue?: Prisma.QueueUpdateOneWithoutUserNestedInput
+  friendOf?: Prisma.FriendshipUpdateManyWithoutFriendNestedInput
+}
+
+export type UserUncheckedUpdateWithoutFriendsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  gamesAsFirst?: Prisma.GameUncheckedUpdateManyWithoutFirstPlayerNestedInput
+  gamesAsSecond?: Prisma.GameUncheckedUpdateManyWithoutSecondPlayerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  relatedNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutRelatedUserNestedInput
+  queue?: Prisma.QueueUncheckedUpdateOneWithoutUserNestedInput
+  friendOf?: Prisma.FriendshipUncheckedUpdateManyWithoutFriendNestedInput
+}
+
+export type UserUpsertWithoutFriendOfInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutFriendOfInput, Prisma.UserUncheckedUpdateWithoutFriendOfInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutFriendOfInput, Prisma.UserUncheckedCreateWithoutFriendOfInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutFriendOfInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutFriendOfInput, Prisma.UserUncheckedUpdateWithoutFriendOfInput>
+}
+
+export type UserUpdateWithoutFriendOfInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  gamesAsFirst?: Prisma.GameUpdateManyWithoutFirstPlayerNestedInput
+  gamesAsSecond?: Prisma.GameUpdateManyWithoutSecondPlayerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  relatedNotifications?: Prisma.NotificationUpdateManyWithoutRelatedUserNestedInput
+  queue?: Prisma.QueueUpdateOneWithoutUserNestedInput
+  friends?: Prisma.FriendshipUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutFriendOfInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  gamesAsFirst?: Prisma.GameUncheckedUpdateManyWithoutFirstPlayerNestedInput
+  gamesAsSecond?: Prisma.GameUncheckedUpdateManyWithoutSecondPlayerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  relatedNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutRelatedUserNestedInput
+  queue?: Prisma.QueueUncheckedUpdateOneWithoutUserNestedInput
+  friends?: Prisma.FriendshipUncheckedUpdateManyWithoutUserNestedInput
+}
+
 export type UserCreateWithoutQueueInput = {
   id?: string
   email: string
@@ -396,6 +626,10 @@ export type UserCreateWithoutQueueInput = {
   createdAt?: Date | string
   gamesAsFirst?: Prisma.GameCreateNestedManyWithoutFirstPlayerInput
   gamesAsSecond?: Prisma.GameCreateNestedManyWithoutSecondPlayerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  relatedNotifications?: Prisma.NotificationCreateNestedManyWithoutRelatedUserInput
+  friends?: Prisma.FriendshipCreateNestedManyWithoutUserInput
+  friendOf?: Prisma.FriendshipCreateNestedManyWithoutFriendInput
 }
 
 export type UserUncheckedCreateWithoutQueueInput = {
@@ -406,6 +640,10 @@ export type UserUncheckedCreateWithoutQueueInput = {
   createdAt?: Date | string
   gamesAsFirst?: Prisma.GameUncheckedCreateNestedManyWithoutFirstPlayerInput
   gamesAsSecond?: Prisma.GameUncheckedCreateNestedManyWithoutSecondPlayerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  relatedNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRelatedUserInput
+  friends?: Prisma.FriendshipUncheckedCreateNestedManyWithoutUserInput
+  friendOf?: Prisma.FriendshipUncheckedCreateNestedManyWithoutFriendInput
 }
 
 export type UserCreateOrConnectWithoutQueueInput = {
@@ -432,6 +670,10 @@ export type UserUpdateWithoutQueueInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gamesAsFirst?: Prisma.GameUpdateManyWithoutFirstPlayerNestedInput
   gamesAsSecond?: Prisma.GameUpdateManyWithoutSecondPlayerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  relatedNotifications?: Prisma.NotificationUpdateManyWithoutRelatedUserNestedInput
+  friends?: Prisma.FriendshipUpdateManyWithoutUserNestedInput
+  friendOf?: Prisma.FriendshipUpdateManyWithoutFriendNestedInput
 }
 
 export type UserUncheckedUpdateWithoutQueueInput = {
@@ -442,6 +684,10 @@ export type UserUncheckedUpdateWithoutQueueInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gamesAsFirst?: Prisma.GameUncheckedUpdateManyWithoutFirstPlayerNestedInput
   gamesAsSecond?: Prisma.GameUncheckedUpdateManyWithoutSecondPlayerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  relatedNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutRelatedUserNestedInput
+  friends?: Prisma.FriendshipUncheckedUpdateManyWithoutUserNestedInput
+  friendOf?: Prisma.FriendshipUncheckedUpdateManyWithoutFriendNestedInput
 }
 
 export type UserCreateWithoutGamesAsFirstInput = {
@@ -451,7 +697,11 @@ export type UserCreateWithoutGamesAsFirstInput = {
   username: string
   createdAt?: Date | string
   gamesAsSecond?: Prisma.GameCreateNestedManyWithoutSecondPlayerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  relatedNotifications?: Prisma.NotificationCreateNestedManyWithoutRelatedUserInput
   queue?: Prisma.QueueCreateNestedOneWithoutUserInput
+  friends?: Prisma.FriendshipCreateNestedManyWithoutUserInput
+  friendOf?: Prisma.FriendshipCreateNestedManyWithoutFriendInput
 }
 
 export type UserUncheckedCreateWithoutGamesAsFirstInput = {
@@ -461,7 +711,11 @@ export type UserUncheckedCreateWithoutGamesAsFirstInput = {
   username: string
   createdAt?: Date | string
   gamesAsSecond?: Prisma.GameUncheckedCreateNestedManyWithoutSecondPlayerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  relatedNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRelatedUserInput
   queue?: Prisma.QueueUncheckedCreateNestedOneWithoutUserInput
+  friends?: Prisma.FriendshipUncheckedCreateNestedManyWithoutUserInput
+  friendOf?: Prisma.FriendshipUncheckedCreateNestedManyWithoutFriendInput
 }
 
 export type UserCreateOrConnectWithoutGamesAsFirstInput = {
@@ -476,7 +730,11 @@ export type UserCreateWithoutGamesAsSecondInput = {
   username: string
   createdAt?: Date | string
   gamesAsFirst?: Prisma.GameCreateNestedManyWithoutFirstPlayerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  relatedNotifications?: Prisma.NotificationCreateNestedManyWithoutRelatedUserInput
   queue?: Prisma.QueueCreateNestedOneWithoutUserInput
+  friends?: Prisma.FriendshipCreateNestedManyWithoutUserInput
+  friendOf?: Prisma.FriendshipCreateNestedManyWithoutFriendInput
 }
 
 export type UserUncheckedCreateWithoutGamesAsSecondInput = {
@@ -486,7 +744,11 @@ export type UserUncheckedCreateWithoutGamesAsSecondInput = {
   username: string
   createdAt?: Date | string
   gamesAsFirst?: Prisma.GameUncheckedCreateNestedManyWithoutFirstPlayerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  relatedNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRelatedUserInput
   queue?: Prisma.QueueUncheckedCreateNestedOneWithoutUserInput
+  friends?: Prisma.FriendshipUncheckedCreateNestedManyWithoutUserInput
+  friendOf?: Prisma.FriendshipUncheckedCreateNestedManyWithoutFriendInput
 }
 
 export type UserCreateOrConnectWithoutGamesAsSecondInput = {
@@ -512,7 +774,11 @@ export type UserUpdateWithoutGamesAsFirstInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gamesAsSecond?: Prisma.GameUpdateManyWithoutSecondPlayerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  relatedNotifications?: Prisma.NotificationUpdateManyWithoutRelatedUserNestedInput
   queue?: Prisma.QueueUpdateOneWithoutUserNestedInput
+  friends?: Prisma.FriendshipUpdateManyWithoutUserNestedInput
+  friendOf?: Prisma.FriendshipUpdateManyWithoutFriendNestedInput
 }
 
 export type UserUncheckedUpdateWithoutGamesAsFirstInput = {
@@ -522,7 +788,11 @@ export type UserUncheckedUpdateWithoutGamesAsFirstInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gamesAsSecond?: Prisma.GameUncheckedUpdateManyWithoutSecondPlayerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  relatedNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutRelatedUserNestedInput
   queue?: Prisma.QueueUncheckedUpdateOneWithoutUserNestedInput
+  friends?: Prisma.FriendshipUncheckedUpdateManyWithoutUserNestedInput
+  friendOf?: Prisma.FriendshipUncheckedUpdateManyWithoutFriendNestedInput
 }
 
 export type UserUpsertWithoutGamesAsSecondInput = {
@@ -543,7 +813,11 @@ export type UserUpdateWithoutGamesAsSecondInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gamesAsFirst?: Prisma.GameUpdateManyWithoutFirstPlayerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  relatedNotifications?: Prisma.NotificationUpdateManyWithoutRelatedUserNestedInput
   queue?: Prisma.QueueUpdateOneWithoutUserNestedInput
+  friends?: Prisma.FriendshipUpdateManyWithoutUserNestedInput
+  friendOf?: Prisma.FriendshipUpdateManyWithoutFriendNestedInput
 }
 
 export type UserUncheckedUpdateWithoutGamesAsSecondInput = {
@@ -553,7 +827,155 @@ export type UserUncheckedUpdateWithoutGamesAsSecondInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gamesAsFirst?: Prisma.GameUncheckedUpdateManyWithoutFirstPlayerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  relatedNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutRelatedUserNestedInput
   queue?: Prisma.QueueUncheckedUpdateOneWithoutUserNestedInput
+  friends?: Prisma.FriendshipUncheckedUpdateManyWithoutUserNestedInput
+  friendOf?: Prisma.FriendshipUncheckedUpdateManyWithoutFriendNestedInput
+}
+
+export type UserCreateWithoutNotificationsInput = {
+  id?: string
+  email: string
+  password: string
+  username: string
+  createdAt?: Date | string
+  gamesAsFirst?: Prisma.GameCreateNestedManyWithoutFirstPlayerInput
+  gamesAsSecond?: Prisma.GameCreateNestedManyWithoutSecondPlayerInput
+  relatedNotifications?: Prisma.NotificationCreateNestedManyWithoutRelatedUserInput
+  queue?: Prisma.QueueCreateNestedOneWithoutUserInput
+  friends?: Prisma.FriendshipCreateNestedManyWithoutUserInput
+  friendOf?: Prisma.FriendshipCreateNestedManyWithoutFriendInput
+}
+
+export type UserUncheckedCreateWithoutNotificationsInput = {
+  id?: string
+  email: string
+  password: string
+  username: string
+  createdAt?: Date | string
+  gamesAsFirst?: Prisma.GameUncheckedCreateNestedManyWithoutFirstPlayerInput
+  gamesAsSecond?: Prisma.GameUncheckedCreateNestedManyWithoutSecondPlayerInput
+  relatedNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRelatedUserInput
+  queue?: Prisma.QueueUncheckedCreateNestedOneWithoutUserInput
+  friends?: Prisma.FriendshipUncheckedCreateNestedManyWithoutUserInput
+  friendOf?: Prisma.FriendshipUncheckedCreateNestedManyWithoutFriendInput
+}
+
+export type UserCreateOrConnectWithoutNotificationsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+}
+
+export type UserCreateWithoutRelatedNotificationsInput = {
+  id?: string
+  email: string
+  password: string
+  username: string
+  createdAt?: Date | string
+  gamesAsFirst?: Prisma.GameCreateNestedManyWithoutFirstPlayerInput
+  gamesAsSecond?: Prisma.GameCreateNestedManyWithoutSecondPlayerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  queue?: Prisma.QueueCreateNestedOneWithoutUserInput
+  friends?: Prisma.FriendshipCreateNestedManyWithoutUserInput
+  friendOf?: Prisma.FriendshipCreateNestedManyWithoutFriendInput
+}
+
+export type UserUncheckedCreateWithoutRelatedNotificationsInput = {
+  id?: string
+  email: string
+  password: string
+  username: string
+  createdAt?: Date | string
+  gamesAsFirst?: Prisma.GameUncheckedCreateNestedManyWithoutFirstPlayerInput
+  gamesAsSecond?: Prisma.GameUncheckedCreateNestedManyWithoutSecondPlayerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  queue?: Prisma.QueueUncheckedCreateNestedOneWithoutUserInput
+  friends?: Prisma.FriendshipUncheckedCreateNestedManyWithoutUserInput
+  friendOf?: Prisma.FriendshipUncheckedCreateNestedManyWithoutFriendInput
+}
+
+export type UserCreateOrConnectWithoutRelatedNotificationsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutRelatedNotificationsInput, Prisma.UserUncheckedCreateWithoutRelatedNotificationsInput>
+}
+
+export type UserUpsertWithoutNotificationsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsInput, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutNotificationsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsInput, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+}
+
+export type UserUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  gamesAsFirst?: Prisma.GameUpdateManyWithoutFirstPlayerNestedInput
+  gamesAsSecond?: Prisma.GameUpdateManyWithoutSecondPlayerNestedInput
+  relatedNotifications?: Prisma.NotificationUpdateManyWithoutRelatedUserNestedInput
+  queue?: Prisma.QueueUpdateOneWithoutUserNestedInput
+  friends?: Prisma.FriendshipUpdateManyWithoutUserNestedInput
+  friendOf?: Prisma.FriendshipUpdateManyWithoutFriendNestedInput
+}
+
+export type UserUncheckedUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  gamesAsFirst?: Prisma.GameUncheckedUpdateManyWithoutFirstPlayerNestedInput
+  gamesAsSecond?: Prisma.GameUncheckedUpdateManyWithoutSecondPlayerNestedInput
+  relatedNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutRelatedUserNestedInput
+  queue?: Prisma.QueueUncheckedUpdateOneWithoutUserNestedInput
+  friends?: Prisma.FriendshipUncheckedUpdateManyWithoutUserNestedInput
+  friendOf?: Prisma.FriendshipUncheckedUpdateManyWithoutFriendNestedInput
+}
+
+export type UserUpsertWithoutRelatedNotificationsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutRelatedNotificationsInput, Prisma.UserUncheckedUpdateWithoutRelatedNotificationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutRelatedNotificationsInput, Prisma.UserUncheckedCreateWithoutRelatedNotificationsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutRelatedNotificationsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutRelatedNotificationsInput, Prisma.UserUncheckedUpdateWithoutRelatedNotificationsInput>
+}
+
+export type UserUpdateWithoutRelatedNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  gamesAsFirst?: Prisma.GameUpdateManyWithoutFirstPlayerNestedInput
+  gamesAsSecond?: Prisma.GameUpdateManyWithoutSecondPlayerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  queue?: Prisma.QueueUpdateOneWithoutUserNestedInput
+  friends?: Prisma.FriendshipUpdateManyWithoutUserNestedInput
+  friendOf?: Prisma.FriendshipUpdateManyWithoutFriendNestedInput
+}
+
+export type UserUncheckedUpdateWithoutRelatedNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  gamesAsFirst?: Prisma.GameUncheckedUpdateManyWithoutFirstPlayerNestedInput
+  gamesAsSecond?: Prisma.GameUncheckedUpdateManyWithoutSecondPlayerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  queue?: Prisma.QueueUncheckedUpdateOneWithoutUserNestedInput
+  friends?: Prisma.FriendshipUncheckedUpdateManyWithoutUserNestedInput
+  friendOf?: Prisma.FriendshipUncheckedUpdateManyWithoutFriendNestedInput
 }
 
 
@@ -564,11 +986,19 @@ export type UserUncheckedUpdateWithoutGamesAsSecondInput = {
 export type UserCountOutputType = {
   gamesAsFirst: number
   gamesAsSecond: number
+  notifications: number
+  relatedNotifications: number
+  friends: number
+  friendOf: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   gamesAsFirst?: boolean | UserCountOutputTypeCountGamesAsFirstArgs
   gamesAsSecond?: boolean | UserCountOutputTypeCountGamesAsSecondArgs
+  notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
+  relatedNotifications?: boolean | UserCountOutputTypeCountRelatedNotificationsArgs
+  friends?: boolean | UserCountOutputTypeCountFriendsArgs
+  friendOf?: boolean | UserCountOutputTypeCountFriendOfArgs
 }
 
 /**
@@ -595,6 +1025,34 @@ export type UserCountOutputTypeCountGamesAsSecondArgs<ExtArgs extends runtime.Ty
   where?: Prisma.GameWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NotificationWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountRelatedNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NotificationWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountFriendsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FriendshipWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountFriendOfArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FriendshipWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -604,7 +1062,11 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   createdAt?: boolean
   gamesAsFirst?: boolean | Prisma.User$gamesAsFirstArgs<ExtArgs>
   gamesAsSecond?: boolean | Prisma.User$gamesAsSecondArgs<ExtArgs>
+  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
+  relatedNotifications?: boolean | Prisma.User$relatedNotificationsArgs<ExtArgs>
   queue?: boolean | Prisma.User$queueArgs<ExtArgs>
+  friends?: boolean | Prisma.User$friendsArgs<ExtArgs>
+  friendOf?: boolean | Prisma.User$friendOfArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -636,7 +1098,11 @@ export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   gamesAsFirst?: boolean | Prisma.User$gamesAsFirstArgs<ExtArgs>
   gamesAsSecond?: boolean | Prisma.User$gamesAsSecondArgs<ExtArgs>
+  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
+  relatedNotifications?: boolean | Prisma.User$relatedNotificationsArgs<ExtArgs>
   queue?: boolean | Prisma.User$queueArgs<ExtArgs>
+  friends?: boolean | Prisma.User$friendsArgs<ExtArgs>
+  friendOf?: boolean | Prisma.User$friendOfArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -647,7 +1113,11 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     gamesAsFirst: Prisma.$GamePayload<ExtArgs>[]
     gamesAsSecond: Prisma.$GamePayload<ExtArgs>[]
+    notifications: Prisma.$NotificationPayload<ExtArgs>[]
+    relatedNotifications: Prisma.$NotificationPayload<ExtArgs>[]
     queue: Prisma.$QueuePayload<ExtArgs> | null
+    friends: Prisma.$FriendshipPayload<ExtArgs>[]
+    friendOf: Prisma.$FriendshipPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1051,7 +1521,11 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   gamesAsFirst<T extends Prisma.User$gamesAsFirstArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$gamesAsFirstArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GamePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   gamesAsSecond<T extends Prisma.User$gamesAsSecondArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$gamesAsSecondArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GamePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  relatedNotifications<T extends Prisma.User$relatedNotificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$relatedNotificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   queue<T extends Prisma.User$queueArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$queueArgs<ExtArgs>>): Prisma.Prisma__QueueClient<runtime.Types.Result.GetResult<Prisma.$QueuePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  friends<T extends Prisma.User$friendsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$friendsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FriendshipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  friendOf<T extends Prisma.User$friendOfArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$friendOfArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FriendshipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1527,6 +2001,54 @@ export type User$gamesAsSecondArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
+ * User.notifications
+ */
+export type User$notificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Notification
+   */
+  select?: Prisma.NotificationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Notification
+   */
+  omit?: Prisma.NotificationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotificationInclude<ExtArgs> | null
+  where?: Prisma.NotificationWhereInput
+  orderBy?: Prisma.NotificationOrderByWithRelationInput | Prisma.NotificationOrderByWithRelationInput[]
+  cursor?: Prisma.NotificationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
+}
+
+/**
+ * User.relatedNotifications
+ */
+export type User$relatedNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Notification
+   */
+  select?: Prisma.NotificationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Notification
+   */
+  omit?: Prisma.NotificationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotificationInclude<ExtArgs> | null
+  where?: Prisma.NotificationWhereInput
+  orderBy?: Prisma.NotificationOrderByWithRelationInput | Prisma.NotificationOrderByWithRelationInput[]
+  cursor?: Prisma.NotificationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
+}
+
+/**
  * User.queue
  */
 export type User$queueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1543,6 +2065,54 @@ export type User$queueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   include?: Prisma.QueueInclude<ExtArgs> | null
   where?: Prisma.QueueWhereInput
+}
+
+/**
+ * User.friends
+ */
+export type User$friendsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Friendship
+   */
+  select?: Prisma.FriendshipSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Friendship
+   */
+  omit?: Prisma.FriendshipOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FriendshipInclude<ExtArgs> | null
+  where?: Prisma.FriendshipWhereInput
+  orderBy?: Prisma.FriendshipOrderByWithRelationInput | Prisma.FriendshipOrderByWithRelationInput[]
+  cursor?: Prisma.FriendshipWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FriendshipScalarFieldEnum | Prisma.FriendshipScalarFieldEnum[]
+}
+
+/**
+ * User.friendOf
+ */
+export type User$friendOfArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Friendship
+   */
+  select?: Prisma.FriendshipSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Friendship
+   */
+  omit?: Prisma.FriendshipOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FriendshipInclude<ExtArgs> | null
+  where?: Prisma.FriendshipWhereInput
+  orderBy?: Prisma.FriendshipOrderByWithRelationInput | Prisma.FriendshipOrderByWithRelationInput[]
+  cursor?: Prisma.FriendshipWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FriendshipScalarFieldEnum | Prisma.FriendshipScalarFieldEnum[]
 }
 
 /**

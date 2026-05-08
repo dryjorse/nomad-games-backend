@@ -23,6 +23,11 @@ export * from './enums';
  */
 export type User = Prisma.UserModel
 /**
+ * Model Friendship
+ * 
+ */
+export type Friendship = Prisma.FriendshipModel
+/**
  * Model Queue
  * 
  */
@@ -32,3 +37,8 @@ export type Queue = Prisma.QueueModel
  * 
  */
 export type Game = Prisma.GameModel
+/**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel

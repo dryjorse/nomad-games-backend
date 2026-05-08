@@ -9,6 +9,8 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User'
+export type * from './models/Friendship'
 export type * from './models/Queue'
 export type * from './models/Game'
+export type * from './models/Notification'
 export type * from './commonInputTypes'

@@ -28,8 +28,15 @@ export type GameRole = (typeof GameRole)[keyof typeof GameRole]
 
 export const GameVisibility = {
   PUBLIC: 'PUBLIC',
-  PRIVATE: 'PRIVATE',
-  FOR_FRIENDS: 'FOR_FRIENDS'
+  PRIVATE: 'PRIVATE'
 } as const
 
 export type GameVisibility = (typeof GameVisibility)[keyof typeof GameVisibility]
+
+
+export const NotificationType = {
+  GAME_INVITATION: 'GAME_INVITATION',
+  FRIEND_REQUEST: 'FRIEND_REQUEST'
+} as const
+
+export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]

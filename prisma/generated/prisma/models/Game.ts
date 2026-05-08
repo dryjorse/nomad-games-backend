@@ -310,6 +310,7 @@ export type GameWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Game"> | Date | string
   firstPlayer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   secondPlayer?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  relatedNotifications?: Prisma.NotificationListRelationFilter
 }
 
 export type GameOrderByWithRelationInput = {
@@ -330,6 +331,7 @@ export type GameOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   firstPlayer?: Prisma.UserOrderByWithRelationInput
   secondPlayer?: Prisma.UserOrderByWithRelationInput
+  relatedNotifications?: Prisma.NotificationOrderByRelationAggregateInput
 }
 
 export type GameWhereUniqueInput = Prisma.AtLeast<{
@@ -353,6 +355,7 @@ export type GameWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Game"> | Date | string
   firstPlayer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   secondPlayer?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  relatedNotifications?: Prisma.NotificationListRelationFilter
 }, "id">
 
 export type GameOrderByWithAggregationInput = {
@@ -415,6 +418,7 @@ export type GameCreateInput = {
   updatedAt?: Date | string
   firstPlayer: Prisma.UserCreateNestedOneWithoutGamesAsFirstInput
   secondPlayer?: Prisma.UserCreateNestedOneWithoutGamesAsSecondInput
+  relatedNotifications?: Prisma.NotificationCreateNestedManyWithoutGameInput
 }
 
 export type GameUncheckedCreateInput = {
@@ -433,6 +437,7 @@ export type GameUncheckedCreateInput = {
   winnerId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  relatedNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutGameInput
 }
 
 export type GameUpdateInput = {
@@ -451,6 +456,7 @@ export type GameUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   firstPlayer?: Prisma.UserUpdateOneRequiredWithoutGamesAsFirstNestedInput
   secondPlayer?: Prisma.UserUpdateOneWithoutGamesAsSecondNestedInput
+  relatedNotifications?: Prisma.NotificationUpdateManyWithoutGameNestedInput
 }
 
 export type GameUncheckedUpdateInput = {
@@ -469,6 +475,7 @@ export type GameUncheckedUpdateInput = {
   winnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  relatedNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutGameNestedInput
 }
 
 export type GameCreateManyInput = {
@@ -609,6 +616,11 @@ export type GameSumOrderByAggregateInput = {
   secondPlayerScore?: Prisma.SortOrder
 }
 
+export type GameNullableScalarRelationFilter = {
+  is?: Prisma.GameWhereInput | null
+  isNot?: Prisma.GameWhereInput | null
+}
+
 export type GameCreateNestedManyWithoutFirstPlayerInput = {
   create?: Prisma.XOR<Prisma.GameCreateWithoutFirstPlayerInput, Prisma.GameUncheckedCreateWithoutFirstPlayerInput> | Prisma.GameCreateWithoutFirstPlayerInput[] | Prisma.GameUncheckedCreateWithoutFirstPlayerInput[]
   connectOrCreate?: Prisma.GameCreateOrConnectWithoutFirstPlayerInput | Prisma.GameCreateOrConnectWithoutFirstPlayerInput[]
@@ -734,6 +746,22 @@ export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
 }
 
+export type GameCreateNestedOneWithoutRelatedNotificationsInput = {
+  create?: Prisma.XOR<Prisma.GameCreateWithoutRelatedNotificationsInput, Prisma.GameUncheckedCreateWithoutRelatedNotificationsInput>
+  connectOrCreate?: Prisma.GameCreateOrConnectWithoutRelatedNotificationsInput
+  connect?: Prisma.GameWhereUniqueInput
+}
+
+export type GameUpdateOneWithoutRelatedNotificationsNestedInput = {
+  create?: Prisma.XOR<Prisma.GameCreateWithoutRelatedNotificationsInput, Prisma.GameUncheckedCreateWithoutRelatedNotificationsInput>
+  connectOrCreate?: Prisma.GameCreateOrConnectWithoutRelatedNotificationsInput
+  upsert?: Prisma.GameUpsertWithoutRelatedNotificationsInput
+  disconnect?: Prisma.GameWhereInput | boolean
+  delete?: Prisma.GameWhereInput | boolean
+  connect?: Prisma.GameWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.GameUpdateToOneWithWhereWithoutRelatedNotificationsInput, Prisma.GameUpdateWithoutRelatedNotificationsInput>, Prisma.GameUncheckedUpdateWithoutRelatedNotificationsInput>
+}
+
 export type GameCreateWithoutFirstPlayerInput = {
   id?: string
   status?: $Enums.GameStatus
@@ -749,6 +777,7 @@ export type GameCreateWithoutFirstPlayerInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   secondPlayer?: Prisma.UserCreateNestedOneWithoutGamesAsSecondInput
+  relatedNotifications?: Prisma.NotificationCreateNestedManyWithoutGameInput
 }
 
 export type GameUncheckedCreateWithoutFirstPlayerInput = {
@@ -766,6 +795,7 @@ export type GameUncheckedCreateWithoutFirstPlayerInput = {
   winnerId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  relatedNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutGameInput
 }
 
 export type GameCreateOrConnectWithoutFirstPlayerInput = {
@@ -793,6 +823,7 @@ export type GameCreateWithoutSecondPlayerInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   firstPlayer: Prisma.UserCreateNestedOneWithoutGamesAsFirstInput
+  relatedNotifications?: Prisma.NotificationCreateNestedManyWithoutGameInput
 }
 
 export type GameUncheckedCreateWithoutSecondPlayerInput = {
@@ -810,6 +841,7 @@ export type GameUncheckedCreateWithoutSecondPlayerInput = {
   winnerId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  relatedNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutGameInput
 }
 
 export type GameCreateOrConnectWithoutSecondPlayerInput = {
@@ -875,6 +907,94 @@ export type GameUpdateManyWithWhereWithoutSecondPlayerInput = {
   data: Prisma.XOR<Prisma.GameUpdateManyMutationInput, Prisma.GameUncheckedUpdateManyWithoutSecondPlayerInput>
 }
 
+export type GameCreateWithoutRelatedNotificationsInput = {
+  id?: string
+  status?: $Enums.GameStatus
+  visibility?: $Enums.GameVisibility
+  board?: Prisma.GameCreateboardInput | number[]
+  firstAce?: number | null
+  secondAce?: number | null
+  firstPlayerRole?: $Enums.GameRole
+  currentTurn?: $Enums.GameRole
+  firstPlayerScore?: number
+  secondPlayerScore?: number
+  winnerId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  firstPlayer: Prisma.UserCreateNestedOneWithoutGamesAsFirstInput
+  secondPlayer?: Prisma.UserCreateNestedOneWithoutGamesAsSecondInput
+}
+
+export type GameUncheckedCreateWithoutRelatedNotificationsInput = {
+  id?: string
+  status?: $Enums.GameStatus
+  visibility?: $Enums.GameVisibility
+  firstPlayerId: string
+  secondPlayerId?: string | null
+  board?: Prisma.GameCreateboardInput | number[]
+  firstAce?: number | null
+  secondAce?: number | null
+  firstPlayerRole?: $Enums.GameRole
+  currentTurn?: $Enums.GameRole
+  firstPlayerScore?: number
+  secondPlayerScore?: number
+  winnerId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type GameCreateOrConnectWithoutRelatedNotificationsInput = {
+  where: Prisma.GameWhereUniqueInput
+  create: Prisma.XOR<Prisma.GameCreateWithoutRelatedNotificationsInput, Prisma.GameUncheckedCreateWithoutRelatedNotificationsInput>
+}
+
+export type GameUpsertWithoutRelatedNotificationsInput = {
+  update: Prisma.XOR<Prisma.GameUpdateWithoutRelatedNotificationsInput, Prisma.GameUncheckedUpdateWithoutRelatedNotificationsInput>
+  create: Prisma.XOR<Prisma.GameCreateWithoutRelatedNotificationsInput, Prisma.GameUncheckedCreateWithoutRelatedNotificationsInput>
+  where?: Prisma.GameWhereInput
+}
+
+export type GameUpdateToOneWithWhereWithoutRelatedNotificationsInput = {
+  where?: Prisma.GameWhereInput
+  data: Prisma.XOR<Prisma.GameUpdateWithoutRelatedNotificationsInput, Prisma.GameUncheckedUpdateWithoutRelatedNotificationsInput>
+}
+
+export type GameUpdateWithoutRelatedNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumGameStatusFieldUpdateOperationsInput | $Enums.GameStatus
+  visibility?: Prisma.EnumGameVisibilityFieldUpdateOperationsInput | $Enums.GameVisibility
+  board?: Prisma.GameUpdateboardInput | number[]
+  firstAce?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  secondAce?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  firstPlayerRole?: Prisma.EnumGameRoleFieldUpdateOperationsInput | $Enums.GameRole
+  currentTurn?: Prisma.EnumGameRoleFieldUpdateOperationsInput | $Enums.GameRole
+  firstPlayerScore?: Prisma.IntFieldUpdateOperationsInput | number
+  secondPlayerScore?: Prisma.IntFieldUpdateOperationsInput | number
+  winnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  firstPlayer?: Prisma.UserUpdateOneRequiredWithoutGamesAsFirstNestedInput
+  secondPlayer?: Prisma.UserUpdateOneWithoutGamesAsSecondNestedInput
+}
+
+export type GameUncheckedUpdateWithoutRelatedNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumGameStatusFieldUpdateOperationsInput | $Enums.GameStatus
+  visibility?: Prisma.EnumGameVisibilityFieldUpdateOperationsInput | $Enums.GameVisibility
+  firstPlayerId?: Prisma.StringFieldUpdateOperationsInput | string
+  secondPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  board?: Prisma.GameUpdateboardInput | number[]
+  firstAce?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  secondAce?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  firstPlayerRole?: Prisma.EnumGameRoleFieldUpdateOperationsInput | $Enums.GameRole
+  currentTurn?: Prisma.EnumGameRoleFieldUpdateOperationsInput | $Enums.GameRole
+  firstPlayerScore?: Prisma.IntFieldUpdateOperationsInput | number
+  secondPlayerScore?: Prisma.IntFieldUpdateOperationsInput | number
+  winnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type GameCreateManyFirstPlayerInput = {
   id?: string
   status?: $Enums.GameStatus
@@ -924,6 +1044,7 @@ export type GameUpdateWithoutFirstPlayerInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   secondPlayer?: Prisma.UserUpdateOneWithoutGamesAsSecondNestedInput
+  relatedNotifications?: Prisma.NotificationUpdateManyWithoutGameNestedInput
 }
 
 export type GameUncheckedUpdateWithoutFirstPlayerInput = {
@@ -941,6 +1062,7 @@ export type GameUncheckedUpdateWithoutFirstPlayerInput = {
   winnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  relatedNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutGameNestedInput
 }
 
 export type GameUncheckedUpdateManyWithoutFirstPlayerInput = {
@@ -975,6 +1097,7 @@ export type GameUpdateWithoutSecondPlayerInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   firstPlayer?: Prisma.UserUpdateOneRequiredWithoutGamesAsFirstNestedInput
+  relatedNotifications?: Prisma.NotificationUpdateManyWithoutGameNestedInput
 }
 
 export type GameUncheckedUpdateWithoutSecondPlayerInput = {
@@ -992,6 +1115,7 @@ export type GameUncheckedUpdateWithoutSecondPlayerInput = {
   winnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  relatedNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutGameNestedInput
 }
 
 export type GameUncheckedUpdateManyWithoutSecondPlayerInput = {
@@ -1012,6 +1136,35 @@ export type GameUncheckedUpdateManyWithoutSecondPlayerInput = {
 }
 
 
+/**
+ * Count Type GameCountOutputType
+ */
+
+export type GameCountOutputType = {
+  relatedNotifications: number
+}
+
+export type GameCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  relatedNotifications?: boolean | GameCountOutputTypeCountRelatedNotificationsArgs
+}
+
+/**
+ * GameCountOutputType without action
+ */
+export type GameCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the GameCountOutputType
+   */
+  select?: Prisma.GameCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * GameCountOutputType without action
+ */
+export type GameCountOutputTypeCountRelatedNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NotificationWhereInput
+}
+
 
 export type GameSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1031,6 +1184,8 @@ export type GameSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updatedAt?: boolean
   firstPlayer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   secondPlayer?: boolean | Prisma.Game$secondPlayerArgs<ExtArgs>
+  relatedNotifications?: boolean | Prisma.Game$relatedNotificationsArgs<ExtArgs>
+  _count?: boolean | Prisma.GameCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["game"]>
 
 export type GameSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1095,6 +1250,8 @@ export type GameOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
 export type GameInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   firstPlayer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   secondPlayer?: boolean | Prisma.Game$secondPlayerArgs<ExtArgs>
+  relatedNotifications?: boolean | Prisma.Game$relatedNotificationsArgs<ExtArgs>
+  _count?: boolean | Prisma.GameCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type GameIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   firstPlayer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1110,6 +1267,7 @@ export type $GamePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     firstPlayer: Prisma.$UserPayload<ExtArgs>
     secondPlayer: Prisma.$UserPayload<ExtArgs> | null
+    relatedNotifications: Prisma.$NotificationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1523,6 +1681,7 @@ export interface Prisma__GameClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   firstPlayer<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   secondPlayer<T extends Prisma.Game$secondPlayerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Game$secondPlayerArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  relatedNotifications<T extends Prisma.Game$relatedNotificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Game$relatedNotificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1984,6 +2143,30 @@ export type Game$secondPlayerArgs<ExtArgs extends runtime.Types.Extensions.Inter
    */
   include?: Prisma.UserInclude<ExtArgs> | null
   where?: Prisma.UserWhereInput
+}
+
+/**
+ * Game.relatedNotifications
+ */
+export type Game$relatedNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Notification
+   */
+  select?: Prisma.NotificationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Notification
+   */
+  omit?: Prisma.NotificationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotificationInclude<ExtArgs> | null
+  where?: Prisma.NotificationWhereInput
+  orderBy?: Prisma.NotificationOrderByWithRelationInput | Prisma.NotificationOrderByWithRelationInput[]
+  cursor?: Prisma.NotificationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
 }
 
 /**
