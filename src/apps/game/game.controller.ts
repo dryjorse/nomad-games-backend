@@ -14,13 +14,13 @@ import { GameService } from './game.service';
 import { IRequest } from 'src/common/types';
 import { EditGameDto, OpenGameDto } from './game.dto';
 import { PaginationDto } from 'src/common/pagination/pagination.dto';
-import { AuthGuard } from '@nestjs/passport';
+import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('game')
 export class GameController {
   constructor(private readonly gameService: GameService) {}
 
-  @Get('open')
+  @Get()
   async getOpenGames(@Query() dto: PaginationDto, @Query('q') q?: string) {
     return this.gameService.getOpenGames(dto, q);
   }
@@ -38,18 +38,29 @@ export class GameController {
   }
 
   @UseGuards(AuthGuard)
-  @Patch(':id')
-  async editGame(
-    @Req() req: IRequest,
-    @Param('id') gameId: string,
-    @Body() dto: EditGameDto,
-  ) {
-    return this.gameService.editGame(req.user.sub, gameId, dto);
+  @Patch()
+  async editGame(@Req() req: IRequest, @Body() dto: EditGameDto) {
+    return this.gameService.editGame(req.user.sub, dto);
   }
 
   @UseGuards(AuthGuard)
   @Delete('kick')
   async kickPlayer(@Req() req: IRequest) {
     return this.gameService.kickPlayer(req.user.sub);
+  }
+
+  @UseGuards(AuthGuard)
+  @Delete('leave')
+  async leaveGame(@Req() req: IRequest) {
+    return this.gameService.leaveGame(req.user.sub);
+  }
+
+  @UseGuards(AuthGuard)
+  @Post('invite/:friendId')
+  async ivniteToGame(
+    @Req() req: IRequest,
+    @Param('friendId') friendId: string,
+  ) {
+    return this.gameService.inviteToGame(req.user.sub, friendId);
   }
 }

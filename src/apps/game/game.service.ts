@@ -10,12 +10,14 @@ import { EditGameDto, OpenGameDto } from './game.dto';
 import { PaginationDto } from 'src/common/pagination/pagination.dto';
 import { paginate } from 'src/common/pagination/paginate';
 import { EnumSocketEvent } from 'src/common/types';
+import { NotificationService } from '../notification/notification.service';
 
 @Injectable()
 export class GameService {
   constructor(
     private prisma: PrismaService,
     private appGateway: AppGateway,
+    private notificationService: NotificationService,
   ) {}
 
   async getOpenGames(dto: PaginationDto, q?: string) {
@@ -29,7 +31,15 @@ export class GameService {
           },
         }),
       },
-      include: { firstPlayer: true },
+      select: {
+        id: true,
+        firstPlayer: {
+          select: {
+            id: true,
+            username: true,
+          },
+        },
+      },
     });
   }
 
@@ -106,9 +116,9 @@ export class GameService {
     return game;
   }
 
-  async editGame(userId: string, gameId: string, dto: EditGameDto) {
-    const game = await this.prisma.game.findUnique({
-      where: { id: gameId },
+  async editGame(userId: string, dto: EditGameDto) {
+    const game = await this.prisma.game.findFirst({
+      where: { firstPlayerId: userId, status: 'WAITING' },
     });
 
     if (!game) throw new NotFoundException('Игра не найдена');
@@ -125,11 +135,12 @@ export class GameService {
     };
 
     const updatedGame = await this.prisma.game.update({
-      where: { id: gameId },
+      where: { id: game.id },
       data,
     });
 
-    if (dto.visibility === 'PUBLIC') this.pullPlayerFromQueue(gameId);
+    if (dto.visibility === 'PUBLIC' && !updatedGame.secondPlayerId)
+      this.pullPlayerFromQueue(game.id);
 
     if (updatedGame.secondPlayerId)
       this.appGateway.gameEditedSocket(updatedGame.secondPlayerId, updatedGame);
@@ -181,10 +192,58 @@ export class GameService {
         data: { secondPlayerId: null },
       });
 
-      this.pullPlayerFromQueue(game.id);
+      if (game.visibility === 'PUBLIC') this.pullPlayerFromQueue(game.id);
       this.appGateway.send(game.firstPlayerId, EnumSocketEvent.PLAYER_LEAVED);
     }
 
     return 'Вы успешно вышли с игры';
+  }
+
+  async inviteToGame(userId: string, friendId: string) {
+    const [user, friend] = await Promise.all([
+      this.prisma.user.findUnique({
+        where: { id: userId },
+        include: {
+          gamesAsFirst: { where: { status: 'WAITING' }, take: 1 },
+        },
+      }),
+      this.prisma.user.findUnique({
+        where: { id: friendId },
+        include: {
+          gamesAsFirst: {
+            where: { status: { in: ['WAITING', 'ACTIVE'] } },
+            take: 1,
+          },
+          gamesAsSecond: {
+            where: { status: { in: ['WAITING', 'ACTIVE'] } },
+            take: 1,
+          },
+          friends: { where: { friendId: userId }, take: 1 },
+          friendOf: { where: { userId }, take: 1 },
+        },
+      }),
+    ]);
+
+    if (!user) throw new NotFoundException('Пользователь не найден');
+    if (!friend) throw new NotFoundException('Друг не найден');
+
+    if (!user.gamesAsFirst.length)
+      throw new NotFoundException('Активная игра не найдена');
+    if (user.gamesAsFirst[0].secondPlayerId)
+      throw new ConflictException('Игра уже заполнена');
+
+    if (!friend.friends.length && !friend.friendOf.length)
+      throw new NotFoundException('Игрок не найден в вашем списке друзей');
+
+    if (friend.gamesAsFirst.length || friend.gamesAsSecond.length)
+      throw new ConflictException('Друг уже находится в игре');
+
+    this.notificationService.createNotification(friendId, {
+      type: 'GAME_INVITATION',
+      userId,
+      gameId: user.gamesAsFirst[0].id,
+    });
+
+    return 'Игрок успешно приглашён';
   }
 }

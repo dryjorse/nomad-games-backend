@@ -164,7 +164,7 @@ export type NotificationGroupByOutputType = {
   userId: string
   type: $Enums.NotificationType
   isRead: boolean
-  relatedUserId: string | null
+  relatedUserId: string
   gameId: string | null
   createdAt: Date
   _count: NotificationCountAggregateOutputType | null
@@ -195,11 +195,11 @@ export type NotificationWhereInput = {
   userId?: Prisma.StringFilter<"Notification"> | string
   type?: Prisma.EnumNotificationTypeFilter<"Notification"> | $Enums.NotificationType
   isRead?: Prisma.BoolFilter<"Notification"> | boolean
-  relatedUserId?: Prisma.StringNullableFilter<"Notification"> | string | null
+  relatedUserId?: Prisma.StringFilter<"Notification"> | string
   gameId?: Prisma.StringNullableFilter<"Notification"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Notification"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  relatedUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  relatedUser?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   game?: Prisma.XOR<Prisma.GameNullableScalarRelationFilter, Prisma.GameWhereInput> | null
 }
 
@@ -208,7 +208,7 @@ export type NotificationOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   isRead?: Prisma.SortOrder
-  relatedUserId?: Prisma.SortOrderInput | Prisma.SortOrder
+  relatedUserId?: Prisma.SortOrder
   gameId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -224,11 +224,11 @@ export type NotificationWhereUniqueInput = Prisma.AtLeast<{
   userId?: Prisma.StringFilter<"Notification"> | string
   type?: Prisma.EnumNotificationTypeFilter<"Notification"> | $Enums.NotificationType
   isRead?: Prisma.BoolFilter<"Notification"> | boolean
-  relatedUserId?: Prisma.StringNullableFilter<"Notification"> | string | null
+  relatedUserId?: Prisma.StringFilter<"Notification"> | string
   gameId?: Prisma.StringNullableFilter<"Notification"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Notification"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  relatedUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  relatedUser?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   game?: Prisma.XOR<Prisma.GameNullableScalarRelationFilter, Prisma.GameWhereInput> | null
 }, "id">
 
@@ -237,7 +237,7 @@ export type NotificationOrderByWithAggregationInput = {
   userId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   isRead?: Prisma.SortOrder
-  relatedUserId?: Prisma.SortOrderInput | Prisma.SortOrder
+  relatedUserId?: Prisma.SortOrder
   gameId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.NotificationCountOrderByAggregateInput
@@ -253,7 +253,7 @@ export type NotificationScalarWhereWithAggregatesInput = {
   userId?: Prisma.StringWithAggregatesFilter<"Notification"> | string
   type?: Prisma.EnumNotificationTypeWithAggregatesFilter<"Notification"> | $Enums.NotificationType
   isRead?: Prisma.BoolWithAggregatesFilter<"Notification"> | boolean
-  relatedUserId?: Prisma.StringNullableWithAggregatesFilter<"Notification"> | string | null
+  relatedUserId?: Prisma.StringWithAggregatesFilter<"Notification"> | string
   gameId?: Prisma.StringNullableWithAggregatesFilter<"Notification"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Notification"> | Date | string
 }
@@ -264,7 +264,7 @@ export type NotificationCreateInput = {
   isRead?: boolean
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutNotificationsInput
-  relatedUser?: Prisma.UserCreateNestedOneWithoutRelatedNotificationsInput
+  relatedUser: Prisma.UserCreateNestedOneWithoutRelatedNotificationsInput
   game?: Prisma.GameCreateNestedOneWithoutRelatedNotificationsInput
 }
 
@@ -273,7 +273,7 @@ export type NotificationUncheckedCreateInput = {
   userId: string
   type: $Enums.NotificationType
   isRead?: boolean
-  relatedUserId?: string | null
+  relatedUserId: string
   gameId?: string | null
   createdAt?: Date | string
 }
@@ -284,7 +284,7 @@ export type NotificationUpdateInput = {
   isRead?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutNotificationsNestedInput
-  relatedUser?: Prisma.UserUpdateOneWithoutRelatedNotificationsNestedInput
+  relatedUser?: Prisma.UserUpdateOneRequiredWithoutRelatedNotificationsNestedInput
   game?: Prisma.GameUpdateOneWithoutRelatedNotificationsNestedInput
 }
 
@@ -293,7 +293,7 @@ export type NotificationUncheckedUpdateInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
   isRead?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  relatedUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  relatedUserId?: Prisma.StringFieldUpdateOperationsInput | string
   gameId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -303,7 +303,7 @@ export type NotificationCreateManyInput = {
   userId: string
   type: $Enums.NotificationType
   isRead?: boolean
-  relatedUserId?: string | null
+  relatedUserId: string
   gameId?: string | null
   createdAt?: Date | string
 }
@@ -320,7 +320,7 @@ export type NotificationUncheckedUpdateManyInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
   isRead?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  relatedUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  relatedUserId?: Prisma.StringFieldUpdateOperationsInput | string
   gameId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -504,7 +504,7 @@ export type NotificationCreateWithoutUserInput = {
   type: $Enums.NotificationType
   isRead?: boolean
   createdAt?: Date | string
-  relatedUser?: Prisma.UserCreateNestedOneWithoutRelatedNotificationsInput
+  relatedUser: Prisma.UserCreateNestedOneWithoutRelatedNotificationsInput
   game?: Prisma.GameCreateNestedOneWithoutRelatedNotificationsInput
 }
 
@@ -512,7 +512,7 @@ export type NotificationUncheckedCreateWithoutUserInput = {
   id?: string
   type: $Enums.NotificationType
   isRead?: boolean
-  relatedUserId?: string | null
+  relatedUserId: string
   gameId?: string | null
   createdAt?: Date | string
 }
@@ -579,7 +579,7 @@ export type NotificationScalarWhereInput = {
   userId?: Prisma.StringFilter<"Notification"> | string
   type?: Prisma.EnumNotificationTypeFilter<"Notification"> | $Enums.NotificationType
   isRead?: Prisma.BoolFilter<"Notification"> | boolean
-  relatedUserId?: Prisma.StringNullableFilter<"Notification"> | string | null
+  relatedUserId?: Prisma.StringFilter<"Notification"> | string
   gameId?: Prisma.StringNullableFilter<"Notification"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Notification"> | Date | string
 }
@@ -606,7 +606,7 @@ export type NotificationCreateWithoutGameInput = {
   isRead?: boolean
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutNotificationsInput
-  relatedUser?: Prisma.UserCreateNestedOneWithoutRelatedNotificationsInput
+  relatedUser: Prisma.UserCreateNestedOneWithoutRelatedNotificationsInput
 }
 
 export type NotificationUncheckedCreateWithoutGameInput = {
@@ -614,7 +614,7 @@ export type NotificationUncheckedCreateWithoutGameInput = {
   userId: string
   type: $Enums.NotificationType
   isRead?: boolean
-  relatedUserId?: string | null
+  relatedUserId: string
   createdAt?: Date | string
 }
 
@@ -648,7 +648,7 @@ export type NotificationCreateManyUserInput = {
   id?: string
   type: $Enums.NotificationType
   isRead?: boolean
-  relatedUserId?: string | null
+  relatedUserId: string
   gameId?: string | null
   createdAt?: Date | string
 }
@@ -667,7 +667,7 @@ export type NotificationUpdateWithoutUserInput = {
   type?: Prisma.EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
   isRead?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  relatedUser?: Prisma.UserUpdateOneWithoutRelatedNotificationsNestedInput
+  relatedUser?: Prisma.UserUpdateOneRequiredWithoutRelatedNotificationsNestedInput
   game?: Prisma.GameUpdateOneWithoutRelatedNotificationsNestedInput
 }
 
@@ -675,7 +675,7 @@ export type NotificationUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
   isRead?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  relatedUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  relatedUserId?: Prisma.StringFieldUpdateOperationsInput | string
   gameId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -684,7 +684,7 @@ export type NotificationUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
   isRead?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  relatedUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  relatedUserId?: Prisma.StringFieldUpdateOperationsInput | string
   gameId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -721,7 +721,7 @@ export type NotificationCreateManyGameInput = {
   userId: string
   type: $Enums.NotificationType
   isRead?: boolean
-  relatedUserId?: string | null
+  relatedUserId: string
   createdAt?: Date | string
 }
 
@@ -731,7 +731,7 @@ export type NotificationUpdateWithoutGameInput = {
   isRead?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutNotificationsNestedInput
-  relatedUser?: Prisma.UserUpdateOneWithoutRelatedNotificationsNestedInput
+  relatedUser?: Prisma.UserUpdateOneRequiredWithoutRelatedNotificationsNestedInput
 }
 
 export type NotificationUncheckedUpdateWithoutGameInput = {
@@ -739,7 +739,7 @@ export type NotificationUncheckedUpdateWithoutGameInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
   isRead?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  relatedUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  relatedUserId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -748,7 +748,7 @@ export type NotificationUncheckedUpdateManyWithoutGameInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
   isRead?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  relatedUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  relatedUserId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -763,7 +763,7 @@ export type NotificationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   gameId?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  relatedUser?: boolean | Prisma.Notification$relatedUserArgs<ExtArgs>
+  relatedUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   game?: boolean | Prisma.Notification$gameArgs<ExtArgs>
 }, ExtArgs["result"]["notification"]>
 
@@ -776,7 +776,7 @@ export type NotificationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   gameId?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  relatedUser?: boolean | Prisma.Notification$relatedUserArgs<ExtArgs>
+  relatedUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   game?: boolean | Prisma.Notification$gameArgs<ExtArgs>
 }, ExtArgs["result"]["notification"]>
 
@@ -789,7 +789,7 @@ export type NotificationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   gameId?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  relatedUser?: boolean | Prisma.Notification$relatedUserArgs<ExtArgs>
+  relatedUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   game?: boolean | Prisma.Notification$gameArgs<ExtArgs>
 }, ExtArgs["result"]["notification"]>
 
@@ -806,17 +806,17 @@ export type NotificationSelectScalar = {
 export type NotificationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "type" | "isRead" | "relatedUserId" | "gameId" | "createdAt", ExtArgs["result"]["notification"]>
 export type NotificationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  relatedUser?: boolean | Prisma.Notification$relatedUserArgs<ExtArgs>
+  relatedUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   game?: boolean | Prisma.Notification$gameArgs<ExtArgs>
 }
 export type NotificationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  relatedUser?: boolean | Prisma.Notification$relatedUserArgs<ExtArgs>
+  relatedUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   game?: boolean | Prisma.Notification$gameArgs<ExtArgs>
 }
 export type NotificationIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  relatedUser?: boolean | Prisma.Notification$relatedUserArgs<ExtArgs>
+  relatedUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   game?: boolean | Prisma.Notification$gameArgs<ExtArgs>
 }
 
@@ -824,7 +824,7 @@ export type $NotificationPayload<ExtArgs extends runtime.Types.Extensions.Intern
   name: "Notification"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
-    relatedUser: Prisma.$UserPayload<ExtArgs> | null
+    relatedUser: Prisma.$UserPayload<ExtArgs>
     game: Prisma.$GamePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -832,7 +832,7 @@ export type $NotificationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     userId: string
     type: $Enums.NotificationType
     isRead: boolean
-    relatedUserId: string | null
+    relatedUserId: string
     gameId: string | null
     createdAt: Date
   }, ExtArgs["result"]["notification"]>
@@ -1230,7 +1230,7 @@ readonly fields: NotificationFieldRefs;
 export interface Prisma__NotificationClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  relatedUser<T extends Prisma.Notification$relatedUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Notification$relatedUserArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  relatedUser<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   game<T extends Prisma.Notification$gameArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Notification$gameArgs<ExtArgs>>): Prisma.Prisma__GameClient<runtime.Types.Result.GetResult<Prisma.$GamePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1666,25 +1666,6 @@ export type NotificationDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.
    * Limit how many Notifications to delete.
    */
   limit?: number
-}
-
-/**
- * Notification.relatedUser
- */
-export type Notification$relatedUserArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the User
-   */
-  select?: Prisma.UserSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the User
-   */
-  omit?: Prisma.UserOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
 }
 
 /**

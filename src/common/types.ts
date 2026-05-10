@@ -11,6 +11,7 @@ export const EnumSocketEvent = {
   PLAYER_KICKED: 'playerKicked',
   GAME_CLOSED: 'gameClosed',
   PLAYER_LEAVED: 'playerLeaved',
+  NOTIFICATION_ARRIVED: 'notificationArrived',
 } as const;
 export type EnumSocketEvent =
   (typeof EnumSocketEvent)[keyof typeof EnumSocketEvent];

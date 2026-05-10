@@ -29,6 +29,9 @@ export type UserMinAggregateOutputType = {
   email: string | null
   password: string | null
   username: string | null
+  ava: string | null
+  resetToken: string | null
+  resetTokenExpiresAt: Date | null
   createdAt: Date | null
 }
 
@@ -37,6 +40,9 @@ export type UserMaxAggregateOutputType = {
   email: string | null
   password: string | null
   username: string | null
+  ava: string | null
+  resetToken: string | null
+  resetTokenExpiresAt: Date | null
   createdAt: Date | null
 }
 
@@ -45,6 +51,9 @@ export type UserCountAggregateOutputType = {
   email: number
   password: number
   username: number
+  ava: number
+  resetToken: number
+  resetTokenExpiresAt: number
   createdAt: number
   _all: number
 }
@@ -55,6 +64,9 @@ export type UserMinAggregateInputType = {
   email?: true
   password?: true
   username?: true
+  ava?: true
+  resetToken?: true
+  resetTokenExpiresAt?: true
   createdAt?: true
 }
 
@@ -63,6 +75,9 @@ export type UserMaxAggregateInputType = {
   email?: true
   password?: true
   username?: true
+  ava?: true
+  resetToken?: true
+  resetTokenExpiresAt?: true
   createdAt?: true
 }
 
@@ -71,6 +86,9 @@ export type UserCountAggregateInputType = {
   email?: true
   password?: true
   username?: true
+  ava?: true
+  resetToken?: true
+  resetTokenExpiresAt?: true
   createdAt?: true
   _all?: true
 }
@@ -152,6 +170,9 @@ export type UserGroupByOutputType = {
   email: string
   password: string
   username: string
+  ava: string | null
+  resetToken: string | null
+  resetTokenExpiresAt: Date | null
   createdAt: Date
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
@@ -181,6 +202,9 @@ export type UserWhereInput = {
   email?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
   username?: Prisma.StringFilter<"User"> | string
+  ava?: Prisma.StringNullableFilter<"User"> | string | null
+  resetToken?: Prisma.StringNullableFilter<"User"> | string | null
+  resetTokenExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   gamesAsFirst?: Prisma.GameListRelationFilter
   gamesAsSecond?: Prisma.GameListRelationFilter
@@ -196,6 +220,9 @@ export type UserOrderByWithRelationInput = {
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
   username?: Prisma.SortOrder
+  ava?: Prisma.SortOrderInput | Prisma.SortOrder
+  resetToken?: Prisma.SortOrderInput | Prisma.SortOrder
+  resetTokenExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   gamesAsFirst?: Prisma.GameOrderByRelationAggregateInput
   gamesAsSecond?: Prisma.GameOrderByRelationAggregateInput
@@ -214,6 +241,9 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   password?: Prisma.StringFilter<"User"> | string
+  ava?: Prisma.StringNullableFilter<"User"> | string | null
+  resetToken?: Prisma.StringNullableFilter<"User"> | string | null
+  resetTokenExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   gamesAsFirst?: Prisma.GameListRelationFilter
   gamesAsSecond?: Prisma.GameListRelationFilter
@@ -229,6 +259,9 @@ export type UserOrderByWithAggregationInput = {
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
   username?: Prisma.SortOrder
+  ava?: Prisma.SortOrderInput | Prisma.SortOrder
+  resetToken?: Prisma.SortOrderInput | Prisma.SortOrder
+  resetTokenExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
@@ -243,6 +276,9 @@ export type UserScalarWhereWithAggregatesInput = {
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
   username?: Prisma.StringWithAggregatesFilter<"User"> | string
+  ava?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  resetToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  resetTokenExpiresAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
 
@@ -251,6 +287,9 @@ export type UserCreateInput = {
   email: string
   password: string
   username: string
+  ava?: string | null
+  resetToken?: string | null
+  resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   gamesAsFirst?: Prisma.GameCreateNestedManyWithoutFirstPlayerInput
   gamesAsSecond?: Prisma.GameCreateNestedManyWithoutSecondPlayerInput
@@ -266,6 +305,9 @@ export type UserUncheckedCreateInput = {
   email: string
   password: string
   username: string
+  ava?: string | null
+  resetToken?: string | null
+  resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   gamesAsFirst?: Prisma.GameUncheckedCreateNestedManyWithoutFirstPlayerInput
   gamesAsSecond?: Prisma.GameUncheckedCreateNestedManyWithoutSecondPlayerInput
@@ -281,6 +323,9 @@ export type UserUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
+  ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gamesAsFirst?: Prisma.GameUpdateManyWithoutFirstPlayerNestedInput
   gamesAsSecond?: Prisma.GameUpdateManyWithoutSecondPlayerNestedInput
@@ -296,6 +341,9 @@ export type UserUncheckedUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
+  ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gamesAsFirst?: Prisma.GameUncheckedUpdateManyWithoutFirstPlayerNestedInput
   gamesAsSecond?: Prisma.GameUncheckedUpdateManyWithoutSecondPlayerNestedInput
@@ -311,6 +359,9 @@ export type UserCreateManyInput = {
   email: string
   password: string
   username: string
+  ava?: string | null
+  resetToken?: string | null
+  resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
 }
 
@@ -319,6 +370,9 @@ export type UserUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
+  ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -327,6 +381,9 @@ export type UserUncheckedUpdateManyInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
+  ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -335,6 +392,9 @@ export type UserCountOrderByAggregateInput = {
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
   username?: Prisma.SortOrder
+  ava?: Prisma.SortOrder
+  resetToken?: Prisma.SortOrder
+  resetTokenExpiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -343,6 +403,9 @@ export type UserMaxOrderByAggregateInput = {
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
   username?: Prisma.SortOrder
+  ava?: Prisma.SortOrder
+  resetToken?: Prisma.SortOrder
+  resetTokenExpiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -351,6 +414,9 @@ export type UserMinOrderByAggregateInput = {
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
   username?: Prisma.SortOrder
+  ava?: Prisma.SortOrder
+  resetToken?: Prisma.SortOrder
+  resetTokenExpiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -366,6 +432,14 @@ export type UserNullableScalarRelationFilter = {
 
 export type StringFieldUpdateOperationsInput = {
   set?: string
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
+}
+
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -464,12 +538,10 @@ export type UserUpdateOneRequiredWithoutNotificationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotificationsInput, Prisma.UserUpdateWithoutNotificationsInput>, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
 }
 
-export type UserUpdateOneWithoutRelatedNotificationsNestedInput = {
+export type UserUpdateOneRequiredWithoutRelatedNotificationsNestedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutRelatedNotificationsInput, Prisma.UserUncheckedCreateWithoutRelatedNotificationsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutRelatedNotificationsInput
   upsert?: Prisma.UserUpsertWithoutRelatedNotificationsInput
-  disconnect?: Prisma.UserWhereInput | boolean
-  delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutRelatedNotificationsInput, Prisma.UserUpdateWithoutRelatedNotificationsInput>, Prisma.UserUncheckedUpdateWithoutRelatedNotificationsInput>
 }
@@ -479,6 +551,9 @@ export type UserCreateWithoutFriendsInput = {
   email: string
   password: string
   username: string
+  ava?: string | null
+  resetToken?: string | null
+  resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   gamesAsFirst?: Prisma.GameCreateNestedManyWithoutFirstPlayerInput
   gamesAsSecond?: Prisma.GameCreateNestedManyWithoutSecondPlayerInput
@@ -493,6 +568,9 @@ export type UserUncheckedCreateWithoutFriendsInput = {
   email: string
   password: string
   username: string
+  ava?: string | null
+  resetToken?: string | null
+  resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   gamesAsFirst?: Prisma.GameUncheckedCreateNestedManyWithoutFirstPlayerInput
   gamesAsSecond?: Prisma.GameUncheckedCreateNestedManyWithoutSecondPlayerInput
@@ -512,6 +590,9 @@ export type UserCreateWithoutFriendOfInput = {
   email: string
   password: string
   username: string
+  ava?: string | null
+  resetToken?: string | null
+  resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   gamesAsFirst?: Prisma.GameCreateNestedManyWithoutFirstPlayerInput
   gamesAsSecond?: Prisma.GameCreateNestedManyWithoutSecondPlayerInput
@@ -526,6 +607,9 @@ export type UserUncheckedCreateWithoutFriendOfInput = {
   email: string
   password: string
   username: string
+  ava?: string | null
+  resetToken?: string | null
+  resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   gamesAsFirst?: Prisma.GameUncheckedCreateNestedManyWithoutFirstPlayerInput
   gamesAsSecond?: Prisma.GameUncheckedCreateNestedManyWithoutSecondPlayerInput
@@ -556,6 +640,9 @@ export type UserUpdateWithoutFriendsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
+  ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gamesAsFirst?: Prisma.GameUpdateManyWithoutFirstPlayerNestedInput
   gamesAsSecond?: Prisma.GameUpdateManyWithoutSecondPlayerNestedInput
@@ -570,6 +657,9 @@ export type UserUncheckedUpdateWithoutFriendsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
+  ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gamesAsFirst?: Prisma.GameUncheckedUpdateManyWithoutFirstPlayerNestedInput
   gamesAsSecond?: Prisma.GameUncheckedUpdateManyWithoutSecondPlayerNestedInput
@@ -595,6 +685,9 @@ export type UserUpdateWithoutFriendOfInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
+  ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gamesAsFirst?: Prisma.GameUpdateManyWithoutFirstPlayerNestedInput
   gamesAsSecond?: Prisma.GameUpdateManyWithoutSecondPlayerNestedInput
@@ -609,6 +702,9 @@ export type UserUncheckedUpdateWithoutFriendOfInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
+  ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gamesAsFirst?: Prisma.GameUncheckedUpdateManyWithoutFirstPlayerNestedInput
   gamesAsSecond?: Prisma.GameUncheckedUpdateManyWithoutSecondPlayerNestedInput
@@ -623,6 +719,9 @@ export type UserCreateWithoutQueueInput = {
   email: string
   password: string
   username: string
+  ava?: string | null
+  resetToken?: string | null
+  resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   gamesAsFirst?: Prisma.GameCreateNestedManyWithoutFirstPlayerInput
   gamesAsSecond?: Prisma.GameCreateNestedManyWithoutSecondPlayerInput
@@ -637,6 +736,9 @@ export type UserUncheckedCreateWithoutQueueInput = {
   email: string
   password: string
   username: string
+  ava?: string | null
+  resetToken?: string | null
+  resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   gamesAsFirst?: Prisma.GameUncheckedCreateNestedManyWithoutFirstPlayerInput
   gamesAsSecond?: Prisma.GameUncheckedCreateNestedManyWithoutSecondPlayerInput
@@ -667,6 +769,9 @@ export type UserUpdateWithoutQueueInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
+  ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gamesAsFirst?: Prisma.GameUpdateManyWithoutFirstPlayerNestedInput
   gamesAsSecond?: Prisma.GameUpdateManyWithoutSecondPlayerNestedInput
@@ -681,6 +786,9 @@ export type UserUncheckedUpdateWithoutQueueInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
+  ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gamesAsFirst?: Prisma.GameUncheckedUpdateManyWithoutFirstPlayerNestedInput
   gamesAsSecond?: Prisma.GameUncheckedUpdateManyWithoutSecondPlayerNestedInput
@@ -695,6 +803,9 @@ export type UserCreateWithoutGamesAsFirstInput = {
   email: string
   password: string
   username: string
+  ava?: string | null
+  resetToken?: string | null
+  resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   gamesAsSecond?: Prisma.GameCreateNestedManyWithoutSecondPlayerInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
@@ -709,6 +820,9 @@ export type UserUncheckedCreateWithoutGamesAsFirstInput = {
   email: string
   password: string
   username: string
+  ava?: string | null
+  resetToken?: string | null
+  resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   gamesAsSecond?: Prisma.GameUncheckedCreateNestedManyWithoutSecondPlayerInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -728,6 +842,9 @@ export type UserCreateWithoutGamesAsSecondInput = {
   email: string
   password: string
   username: string
+  ava?: string | null
+  resetToken?: string | null
+  resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   gamesAsFirst?: Prisma.GameCreateNestedManyWithoutFirstPlayerInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
@@ -742,6 +859,9 @@ export type UserUncheckedCreateWithoutGamesAsSecondInput = {
   email: string
   password: string
   username: string
+  ava?: string | null
+  resetToken?: string | null
+  resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   gamesAsFirst?: Prisma.GameUncheckedCreateNestedManyWithoutFirstPlayerInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -772,6 +892,9 @@ export type UserUpdateWithoutGamesAsFirstInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
+  ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gamesAsSecond?: Prisma.GameUpdateManyWithoutSecondPlayerNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
@@ -786,6 +909,9 @@ export type UserUncheckedUpdateWithoutGamesAsFirstInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
+  ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gamesAsSecond?: Prisma.GameUncheckedUpdateManyWithoutSecondPlayerNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -811,6 +937,9 @@ export type UserUpdateWithoutGamesAsSecondInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
+  ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gamesAsFirst?: Prisma.GameUpdateManyWithoutFirstPlayerNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
@@ -825,6 +954,9 @@ export type UserUncheckedUpdateWithoutGamesAsSecondInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
+  ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gamesAsFirst?: Prisma.GameUncheckedUpdateManyWithoutFirstPlayerNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -839,6 +971,9 @@ export type UserCreateWithoutNotificationsInput = {
   email: string
   password: string
   username: string
+  ava?: string | null
+  resetToken?: string | null
+  resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   gamesAsFirst?: Prisma.GameCreateNestedManyWithoutFirstPlayerInput
   gamesAsSecond?: Prisma.GameCreateNestedManyWithoutSecondPlayerInput
@@ -853,6 +988,9 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   email: string
   password: string
   username: string
+  ava?: string | null
+  resetToken?: string | null
+  resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   gamesAsFirst?: Prisma.GameUncheckedCreateNestedManyWithoutFirstPlayerInput
   gamesAsSecond?: Prisma.GameUncheckedCreateNestedManyWithoutSecondPlayerInput
@@ -872,6 +1010,9 @@ export type UserCreateWithoutRelatedNotificationsInput = {
   email: string
   password: string
   username: string
+  ava?: string | null
+  resetToken?: string | null
+  resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   gamesAsFirst?: Prisma.GameCreateNestedManyWithoutFirstPlayerInput
   gamesAsSecond?: Prisma.GameCreateNestedManyWithoutSecondPlayerInput
@@ -886,6 +1027,9 @@ export type UserUncheckedCreateWithoutRelatedNotificationsInput = {
   email: string
   password: string
   username: string
+  ava?: string | null
+  resetToken?: string | null
+  resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
   gamesAsFirst?: Prisma.GameUncheckedCreateNestedManyWithoutFirstPlayerInput
   gamesAsSecond?: Prisma.GameUncheckedCreateNestedManyWithoutSecondPlayerInput
@@ -916,6 +1060,9 @@ export type UserUpdateWithoutNotificationsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
+  ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gamesAsFirst?: Prisma.GameUpdateManyWithoutFirstPlayerNestedInput
   gamesAsSecond?: Prisma.GameUpdateManyWithoutSecondPlayerNestedInput
@@ -930,6 +1077,9 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
+  ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gamesAsFirst?: Prisma.GameUncheckedUpdateManyWithoutFirstPlayerNestedInput
   gamesAsSecond?: Prisma.GameUncheckedUpdateManyWithoutSecondPlayerNestedInput
@@ -955,6 +1105,9 @@ export type UserUpdateWithoutRelatedNotificationsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
+  ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gamesAsFirst?: Prisma.GameUpdateManyWithoutFirstPlayerNestedInput
   gamesAsSecond?: Prisma.GameUpdateManyWithoutSecondPlayerNestedInput
@@ -969,6 +1122,9 @@ export type UserUncheckedUpdateWithoutRelatedNotificationsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
+  ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   gamesAsFirst?: Prisma.GameUncheckedUpdateManyWithoutFirstPlayerNestedInput
   gamesAsSecond?: Prisma.GameUncheckedUpdateManyWithoutSecondPlayerNestedInput
@@ -1059,6 +1215,9 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   email?: boolean
   password?: boolean
   username?: boolean
+  ava?: boolean
+  resetToken?: boolean
+  resetTokenExpiresAt?: boolean
   createdAt?: boolean
   gamesAsFirst?: boolean | Prisma.User$gamesAsFirstArgs<ExtArgs>
   gamesAsSecond?: boolean | Prisma.User$gamesAsSecondArgs<ExtArgs>
@@ -1075,6 +1234,9 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   email?: boolean
   password?: boolean
   username?: boolean
+  ava?: boolean
+  resetToken?: boolean
+  resetTokenExpiresAt?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["user"]>
 
@@ -1083,6 +1245,9 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   email?: boolean
   password?: boolean
   username?: boolean
+  ava?: boolean
+  resetToken?: boolean
+  resetTokenExpiresAt?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["user"]>
 
@@ -1091,10 +1256,13 @@ export type UserSelectScalar = {
   email?: boolean
   password?: boolean
   username?: boolean
+  ava?: boolean
+  resetToken?: boolean
+  resetTokenExpiresAt?: boolean
   createdAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "username" | "createdAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "username" | "ava" | "resetToken" | "resetTokenExpiresAt" | "createdAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   gamesAsFirst?: boolean | Prisma.User$gamesAsFirstArgs<ExtArgs>
   gamesAsSecond?: boolean | Prisma.User$gamesAsSecondArgs<ExtArgs>
@@ -1124,6 +1292,9 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     email: string
     password: string
     username: string
+    ava: string | null
+    resetToken: string | null
+    resetTokenExpiresAt: Date | null
     createdAt: Date
   }, ExtArgs["result"]["user"]>
   composites: {}
@@ -1559,6 +1730,9 @@ export interface UserFieldRefs {
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly password: Prisma.FieldRef<"User", 'String'>
   readonly username: Prisma.FieldRef<"User", 'String'>
+  readonly ava: Prisma.FieldRef<"User", 'String'>
+  readonly resetToken: Prisma.FieldRef<"User", 'String'>
+  readonly resetTokenExpiresAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
 }
     

@@ -8,7 +8,7 @@ import { Server, Socket } from 'socket.io';
 import { JwtService } from '@nestjs/jwt';
 import { Injectable } from '@nestjs/common';
 import { EnumSocketEvent } from 'src/common/types';
-import { Game, User } from 'prisma/generated/prisma/client';
+import { Game, Notification, User } from 'prisma/generated/prisma/client';
 
 @WebSocketGateway({ cors: { origin: '*' } })
 @Injectable()
@@ -46,6 +46,10 @@ export class AppGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   gameEditedSocket(user: string, game: Game) {
     this.send(user, EnumSocketEvent.GAME_EDITED, game);
+  }
+
+  notificationArrivedSocket(user: string, notification: Notification) {
+    this.send(user, EnumSocketEvent.NOTIFICATION_ARRIVED, notification);
   }
 
   send(

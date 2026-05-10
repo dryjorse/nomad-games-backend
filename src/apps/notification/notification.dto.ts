@@ -1,4 +1,4 @@
-import { IsEnum, IsOptional, IsUUID } from 'class-validator';
+import { IsArray, IsEnum, IsOptional, IsUUID } from 'class-validator';
 import { NotificationType } from 'prisma/generated/prisma/enums';
 
 export class CreateNotificationDto {
@@ -11,4 +11,10 @@ export class CreateNotificationDto {
   @IsUUID()
   @IsOptional()
   gameId?: string;
+}
+
+export class ReadNotificationsDto {
+  @IsArray()
+  @IsUUID('all', { each: true })
+  notifications: string[];
 }

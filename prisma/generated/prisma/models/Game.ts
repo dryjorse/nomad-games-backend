@@ -742,10 +742,6 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
 export type GameCreateNestedOneWithoutRelatedNotificationsInput = {
   create?: Prisma.XOR<Prisma.GameCreateWithoutRelatedNotificationsInput, Prisma.GameUncheckedCreateWithoutRelatedNotificationsInput>
   connectOrCreate?: Prisma.GameCreateOrConnectWithoutRelatedNotificationsInput

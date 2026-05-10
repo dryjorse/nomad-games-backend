@@ -1,18 +1,23 @@
 import {
   BadRequestException,
   Injectable,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterDto } from './auth.dto';
+import { MailerService } from '@nestjs-modules/mailer';
+import crypto from 'crypto';
+import { User } from 'prisma/generated/prisma/client';
 
 @Injectable()
 export class AuthService {
   constructor(
     private prisma: PrismaService,
     private jwtService: JwtService,
+    private mailerService: MailerService,
   ) {}
 
   async register(registerDto: RegisterDto) {
@@ -38,16 +43,23 @@ export class AuthService {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await this.prisma.user.create({
-      data: { email, password: hashedPassword, username },
+      data: {
+        email,
+        password: hashedPassword,
+        username,
+        ava: `https://api.dicebear.com/7.x/initials/svg?seed=${username}`,
+      },
+      omit: { resetToken: true, resetTokenExpiresAt: true },
     });
     const { password: _, ...result } = user;
 
-    return result;
+    return this.login(result);
   }
 
   async validateUser(username: string, password: string) {
     const user = await this.prisma.user.findUnique({
       where: { username },
+      omit: { resetToken: true, resetTokenExpiresAt: true },
     });
 
     if (!user) {
@@ -65,7 +77,7 @@ export class AuthService {
     return result;
   }
 
-  async login(user: { id: string; username: string; email: string }) {
+  login(user: Omit<User, 'password' | 'resetToken' | 'resetTokenExpiresAt'>) {
     const payload = {
       sub: user.id,
       username: user.username,
@@ -80,7 +92,10 @@ export class AuthService {
       expiresIn: '7d',
     });
 
-    return { accessToken, refreshToken };
+    return {
+      tokens: { accessToken, refreshToken },
+      user,
+    };
   }
 
   verifyToken(token: string) {
@@ -96,5 +111,51 @@ export class AuthService {
 
   findUserById(id: string) {
     return this.prisma.user.findUnique({ where: { id } });
+  }
+
+  async forgotPassword(email: string) {
+    const user = await this.prisma.user.findUnique({ where: { email } });
+
+    if (!user) throw new NotFoundException('Пользователь не найден');
+
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    const expiresAt = new Date(Date.now() + 1000 * 60 * 60); // 1 час
+
+    await this.prisma.user.update({
+      where: { id: user.id },
+      data: { resetToken, resetTokenExpiresAt: expiresAt },
+    });
+
+    await this.mailerService.sendMail({
+      to: email,
+      subject: 'Восстановление пароля',
+      text: `Ссылка для сброса пароля: ${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`,
+    });
+
+    return 'Письмо отправлено на ваш email';
+  }
+
+  async resetPassword(token: string, newPassword: string) {
+    const user = await this.prisma.user.findFirst({
+      where: {
+        resetToken: token,
+        resetTokenExpiresAt: { gt: new Date() },
+      },
+    });
+
+    if (!user) throw new BadRequestException('Токен недействителен или истёк');
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    await this.prisma.user.update({
+      where: { id: user.id },
+      data: {
+        password: hashedPassword,
+        resetToken: null,
+        resetTokenExpiresAt: null,
+      },
+    });
+
+    return 'Пароль успешно изменён';
   }
 }

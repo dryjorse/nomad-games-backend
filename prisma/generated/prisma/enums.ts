@@ -36,7 +36,8 @@ export type GameVisibility = (typeof GameVisibility)[keyof typeof GameVisibility
 
 export const NotificationType = {
   GAME_INVITATION: 'GAME_INVITATION',
-  FRIEND_REQUEST: 'FRIEND_REQUEST'
+  FRIEND_REQUEST: 'FRIEND_REQUEST',
+  FRIEND_REQUEST_ACCEPTED: 'FRIEND_REQUEST_ACCEPTED'
 } as const
 
 export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]

@@ -14,12 +14,7 @@ export const paginate = async <T>(
   ]);
 
   return {
-    data,
-    meta: {
-      total,
-      page: dto.page,
-      limit: dto.limit,
-      totalPages: Math.ceil(total / dto.limit!),
-    },
+    count: total,
+    results: data,
   };
 };

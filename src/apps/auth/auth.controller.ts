@@ -1,6 +1,11 @@
 import { Body, Controller, Post, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { LoginUserDto, RegisterDto } from './auth.dto';
+import {
+  ForgorPasswordDto,
+  LoginUserDto,
+  RegisterDto,
+  ResetPasswordDto,
+} from './auth.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -22,11 +27,7 @@ export class AuthController {
       throw user;
     }
 
-    return this.authService.login({
-      id: user.id,
-      username: user.username,
-      email: user.email,
-    });
+    return this.authService.login(user);
   }
 
   @Post('refresh')
@@ -43,10 +44,18 @@ export class AuthController {
 
     if (!user) throw new UnauthorizedException('Пользователь не найден');
 
-    return this.authService.login({
-      id: user.id,
-      username: user.username,
-      email: user.email,
-    });
+    const { password: _, ...userInfo } = user;
+
+    return this.authService.login(userInfo);
+  }
+
+  @Post('forgot-password')
+  async forgotPassword(@Body() forgotPasswordDto: ForgorPasswordDto) {
+    return this.authService.forgotPassword(forgotPasswordDto.email);
+  }
+
+  @Post('reset-password')
+  async resetPassword(@Body() dto: ResetPasswordDto) {
+    return this.authService.resetPassword(dto.token, dto.password);
   }
 }
