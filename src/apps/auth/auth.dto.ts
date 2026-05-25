@@ -1,14 +1,28 @@
-import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  Matches,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 
 export class RegisterDto {
   @IsEmail()
   email: string;
 
   @IsNotEmpty()
-  @MinLength(6)
+  @IsString()
+  @MinLength(8)
+  @MaxLength(128)
+  @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/, {
+    message:
+      'Пароль должен содержать заглавную букву, строчную, цифру и спецсимвол',
+  })
   password: string;
 
   @IsNotEmpty()
+  @IsString()
   @MinLength(3)
   username: string;
 }

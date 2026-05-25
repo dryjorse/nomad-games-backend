@@ -52,6 +52,10 @@ export class AppGateway implements OnGatewayConnection, OnGatewayDisconnect {
     this.send(user, EnumSocketEvent.NOTIFICATION_ARRIVED, notification);
   }
 
+  rivalMovedSocket(user: string, game: Game) {
+    this.send(user, EnumSocketEvent.RIVAL_MOVED, game);
+  }
+
   send(
     userIds: string | number | (string | number)[],
     event: EnumSocketEvent,

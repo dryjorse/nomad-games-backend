@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   ForbiddenException,
   Injectable,
@@ -6,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { AppGateway } from 'src/gateway/app.gateway';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { EditGameDto, OpenGameDto } from './game.dto';
+import { EditGameDto, MoveDto, OpenGameDto, RespondDrawDto } from './game.dto';
 import { PaginationDto } from 'src/common/pagination/pagination.dto';
 import { paginate } from 'src/common/pagination/paginate';
 import { EnumSocketEvent } from 'src/common/types';
@@ -70,6 +71,15 @@ export class GameService {
   }
 
   async joinGame(userId: string, gameId: string) {
+    const isGameExists = await this.prisma.game.findFirst({
+      where: {
+        OR: [{ firstPlayerId: userId }, { secondPlayerId: userId }],
+        status: { in: ['WAITING', 'ACTIVE'] },
+      },
+    });
+
+    if (isGameExists) throw new ConflictException('Вы уже участвуете в игре');
+
     const game = await this.prisma.game.findUnique({
       where: { id: gameId },
     });
@@ -82,9 +92,6 @@ export class GameService {
       case 'FINISHED':
         throw new ConflictException('Игра уже завершилась');
     }
-
-    if (game.firstPlayerId === userId || game.secondPlayerId === userId)
-      throw new ConflictException('Вы уже находитесь в игре');
 
     if (game.secondPlayerId) throw new ConflictException('Игра заполнена');
 
@@ -102,6 +109,15 @@ export class GameService {
   }
 
   async openGame(userId: string, openGameDto: OpenGameDto) {
+    const isGameExists = await this.prisma.game.findFirst({
+      where: {
+        OR: [{ firstPlayerId: userId }, { secondPlayerId: userId }],
+        status: { in: ['WAITING', 'ACTIVE'] },
+      },
+    });
+
+    if (isGameExists) throw new ConflictException('Вы уже участвуете в игре');
+
     const game = await this.prisma.game.create({
       data: {
         firstPlayerId: userId,
@@ -245,5 +261,408 @@ export class GameService {
     });
 
     return 'Игрок успешно приглашён';
+  }
+
+  async startGame(userId: string) {
+    const game = await this.prisma.game.findFirst({
+      where: { firstPlayerId: userId, status: 'WAITING' },
+    });
+
+    if (!game) throw new NotFoundException('Комната не найдена');
+
+    if (!game.secondPlayerId)
+      throw new BadRequestException('Соперник отсутствует');
+
+    const startedGame = await this.prisma.game.update({
+      where: { id: game.id },
+      data: { status: 'ACTIVE' },
+    });
+
+    this.appGateway.send(
+      game.secondPlayerId,
+      EnumSocketEvent.GAME_STARTED,
+      game.id,
+    );
+
+    return startedGame;
+  }
+
+  async move(userId: string, { cell }: MoveDto) {
+    const game = await this.prisma.game.findFirst({
+      where: {
+        OR: [{ firstPlayerId: userId }, { secondPlayerId: userId }],
+        status: 'ACTIVE',
+      },
+    });
+
+    if (!game) throw new NotFoundException('Игра не найдена');
+
+    const isFirstPlayer = game.firstPlayerId === userId;
+    const currentRole = isFirstPlayer
+      ? game.firstPlayerRole
+      : game.firstPlayerRole === 'WHITE'
+        ? 'BLACK'
+        : 'WHITE';
+
+    if (game.currentTurn !== currentRole)
+      throw new BadRequestException('Не ваш ход');
+
+    const myAce = isFirstPlayer ? game.firstAce : game.secondAce;
+    const rivalAce = isFirstPlayer ? game.secondAce : game.firstAce;
+
+    if (myAce === cell)
+      throw new BadRequestException('Нельзя выбрать ячейку с тузом');
+
+    let myCells = isFirstPlayer
+      ? [...game.board.slice(0, 9)]
+      : [...game.board.slice(9)];
+    let rivalCells = isFirstPlayer
+      ? [...game.board.slice(9)]
+      : [...game.board.slice(0, 9)];
+
+    let myScore = game[`${isFirstPlayer ? 'first' : 'second'}PlayerScore`];
+    let rivalScore = game[`${isFirstPlayer ? 'second' : 'first'}PlayerScore`];
+
+    const figuresCount = myCells[cell - 1];
+
+    if (!figuresCount)
+      throw new BadRequestException('Нельзя выбрать пустую ячейку');
+
+    myCells[cell - 1] = figuresCount === 1 ? 1 : 0;
+
+    let pos = cell - 1;
+    let inMyCells = true;
+
+    if (figuresCount > 1) {
+      for (let i = 0; i < figuresCount; i++) {
+        (inMyCells ? myCells : rivalCells)[pos]++;
+
+        if (inMyCells) {
+          if (pos < 8) pos++;
+          else {
+            inMyCells = false;
+          }
+        } else {
+          if (pos > 0) pos--;
+          else {
+            inMyCells = true;
+          }
+        }
+      }
+    } else {
+      if (isFirstPlayer && cell === 9) {
+        inMyCells = false;
+        pos = 8;
+        rivalCells[pos]++;
+      } else if (!isFirstPlayer && cell === 1) {
+        inMyCells = true;
+        pos = 0;
+        myCells[pos]++;
+      } else {
+        pos = isFirstPlayer ? cell : cell - 2;
+        myCells[pos]++;
+      }
+    }
+
+    const applyAce = (
+      acePos: number | null,
+      targetCells: number[],
+      addToScore: (n: number) => void,
+    ) => {
+      if (acePos && targetCells[acePos - 1]) {
+        addToScore(targetCells[acePos - 1]);
+        targetCells[acePos - 1] = 0;
+      }
+    };
+
+    applyAce(myAce, rivalCells, (n) => (myScore += n));
+    applyAce(rivalAce, myCells, (n) => (rivalScore += n));
+
+    let newMyAce: number | null = myAce ?? null;
+    let newRivalAce: number | null = rivalAce ?? null;
+
+    const landedCells = inMyCells ? myCells : rivalCells;
+    const landedCount = landedCells[pos];
+    const landedOnRival = inMyCells !== isFirstPlayer;
+
+    if (landedOnRival && landedCount) {
+      const isEven = landedCount % 2 === 0;
+      const isThree = landedCount === 3;
+      const notAcePos = rivalAce !== pos + 1;
+      const notEdge = pos !== (isFirstPlayer ? 0 : 8);
+
+      if (isEven || (isThree && notEdge && notAcePos)) {
+        myScore += landedCount;
+        landedCells[pos] = 0;
+
+        if (isThree) {
+          if (isFirstPlayer) newMyAce = pos + 1;
+          else newRivalAce = pos + 1;
+        }
+      }
+    }
+
+    let winnerId: string | null = null;
+    let isFinished = false;
+
+    if (myScore >= 82) {
+      winnerId = isFirstPlayer ? game.firstPlayerId : game.secondPlayerId;
+      isFinished = true;
+    }
+
+    const rivalAllEmpty = rivalCells.every((f) => f === 0);
+
+    if (rivalAllEmpty && !isFinished) {
+      isFinished = true;
+      if (rivalScore < 81) {
+        winnerId = isFirstPlayer ? game.firstPlayerId : game.secondPlayerId;
+      } else if (rivalScore > 81) {
+        winnerId = isFirstPlayer ? game.secondPlayerId : game.firstPlayerId;
+      } else {
+        winnerId = null;
+      }
+    }
+
+    const nextTurn = isFirstPlayer
+      ? game.firstPlayerRole === 'WHITE'
+        ? 'BLACK'
+        : 'WHITE'
+      : game.firstPlayerRole;
+
+    const board = isFirstPlayer
+      ? [...myCells, ...rivalCells]
+      : [...rivalCells, ...myCells];
+
+    const opponent = isFirstPlayer ? game.secondPlayerId : game.firstPlayerId;
+
+    if (isFinished) {
+      const [updatedGame] = await this.prisma.$transaction([
+        this.prisma.game.update({
+          where: { id: game.id },
+          data: {
+            board,
+            firstPlayerScore: isFirstPlayer ? myScore : rivalScore,
+            secondPlayerScore: isFirstPlayer ? rivalScore : myScore,
+            firstAce: isFirstPlayer ? newMyAce : newRivalAce,
+            secondAce: isFirstPlayer ? newRivalAce : newMyAce,
+            currentTurn: nextTurn,
+            winnerId,
+            status: 'FINISHED',
+          },
+        }),
+        ...(winnerId
+          ? [
+              this.prisma.user.update({
+                where: { id: winnerId },
+                data: { wins: { increment: 1 } },
+              }),
+            ]
+          : []),
+      ]);
+
+      this.appGateway.rivalMovedSocket(opponent!, updatedGame);
+
+      this.appGateway.send(
+        [game.firstPlayerId, game.secondPlayerId!],
+        EnumSocketEvent.GAME_FINISHED,
+        winnerId,
+      );
+
+      return updatedGame;
+    }
+
+    const updatedGame = await this.prisma.game.update({
+      where: { id: game.id },
+      data: {
+        board,
+        firstPlayerScore: isFirstPlayer ? myScore : rivalScore,
+        secondPlayerScore: isFirstPlayer ? rivalScore : myScore,
+        firstAce: isFirstPlayer ? newMyAce : newRivalAce,
+        secondAce: isFirstPlayer ? newRivalAce : newMyAce,
+        currentTurn: nextTurn,
+        winnerId,
+        status: 'ACTIVE',
+      },
+    });
+
+    this.appGateway.rivalMovedSocket(opponent!, updatedGame);
+
+    return updatedGame;
+  }
+
+  async giveUp(userId: string) {
+    const game = await this.prisma.game.findFirst({
+      where: {
+        OR: [{ firstPlayerId: userId }, { secondPlayerId: userId }],
+        status: 'ACTIVE',
+      },
+    });
+
+    if (!game) throw new NotFoundException('Активная игра не найдена');
+
+    const isFirstPlayer = game.firstPlayerId === userId;
+    const rival = isFirstPlayer ? game.secondPlayerId : game.firstPlayerId;
+
+    const [updatedGame] = await this.prisma.$transaction([
+      this.prisma.game.update({
+        where: { id: game.id },
+        data: { status: 'FINISHED', winnerId: rival },
+      }),
+      this.prisma.user.update({
+        where: { id: rival! },
+        data: { wins: { increment: 1 } },
+      }),
+    ]);
+
+    this.appGateway.send(rival!, EnumSocketEvent.RIVAL_GIVED_UP);
+
+    return updatedGame;
+  }
+
+  async requestDraw(userId: string) {
+    const game = await this.prisma.game.findFirst({
+      where: {
+        OR: [{ firstPlayerId: userId }, { secondPlayerId: userId }],
+        status: 'ACTIVE',
+      },
+    });
+
+    if (!game) throw new NotFoundException('Игра не найдена');
+
+    const isFirstPlayer = game.firstPlayerId === userId;
+    const myDrawField = isFirstPlayer
+      ? 'firstPlayerDrawRequest'
+      : 'secondPlayerDrawRequest';
+    const rivalDrawField = isFirstPlayer
+      ? 'secondPlayerDrawRequest'
+      : 'firstPlayerDrawRequest';
+    const rivalId = isFirstPlayer ? game.secondPlayerId : game.firstPlayerId;
+
+    if (game[myDrawField])
+      throw new ConflictException('Вы уже отправили запрос на ничью');
+
+    if (game[rivalDrawField]) {
+      const finishedGame = await this.prisma.game.update({
+        where: { id: game.id },
+        data: { status: 'FINISHED', winnerId: null },
+      });
+
+      this.appGateway.send(
+        [game.firstPlayerId, game.secondPlayerId!],
+        EnumSocketEvent.GAME_FINISHED,
+        { winnerId: null },
+      );
+
+      return finishedGame;
+    }
+
+    await this.prisma.game.update({
+      where: { id: game.id },
+      data: { [myDrawField]: true },
+    });
+
+    this.appGateway.send(rivalId!, EnumSocketEvent.DRAW_REQUESTED);
+
+    return { message: 'Запрос на ничью отправлен' };
+  }
+
+  async respondDraw(userId: string, { accept }: RespondDrawDto) {
+    const game = await this.prisma.game.findFirst({
+      where: {
+        OR: [{ firstPlayerId: userId }, { secondPlayerId: userId }],
+        status: 'ACTIVE',
+      },
+    });
+
+    if (!game) throw new NotFoundException('Игра не найдена');
+
+    const isFirstPlayer = game.firstPlayerId === userId;
+    const rivalDrawField = isFirstPlayer
+      ? 'secondPlayerDrawRequest'
+      : 'firstPlayerDrawRequest';
+    const rivalId = isFirstPlayer ? game.secondPlayerId : game.firstPlayerId;
+
+    if (!game[rivalDrawField])
+      throw new BadRequestException('Соперник не запрашивал ничью');
+
+    if (accept) {
+      const finishedGame = await this.prisma.game.update({
+        where: { id: game.id },
+        data: {
+          status: 'FINISHED',
+          winnerId: null,
+          firstPlayerDrawRequest: false,
+          secondPlayerDrawRequest: false,
+        },
+      });
+
+      this.appGateway.send(
+        [game.firstPlayerId, game.secondPlayerId!],
+        EnumSocketEvent.GAME_FINISHED,
+        { winnerId: null },
+      );
+
+      return finishedGame;
+    }
+
+    await this.prisma.game.update({
+      where: { id: game.id },
+      data: { [rivalDrawField]: false },
+    });
+
+    this.appGateway.send(rivalId!, EnumSocketEvent.DRAW_DECLINED);
+
+    return { message: 'Вы отклонили запрос на ничью' };
+  }
+
+  async getMyGames(userId: string) {
+    const games = await this.prisma.game.findMany({
+      where: {
+        OR: [{ firstPlayerId: userId }, { secondPlayerId: userId }],
+        status: 'FINISHED',
+      },
+      select: {
+        id: true,
+        winnerId: true,
+        firstPlayer: {
+          select: {
+            id: true,
+            username: true,
+            ava: true,
+            wins: true,
+            friends: { where: { friendId: userId }, select: { id: true } },
+            friendOf: { where: { userId }, select: { id: true } },
+          },
+        },
+        secondPlayer: {
+          select: {
+            id: true,
+            username: true,
+            ava: true,
+            wins: true,
+            friends: { where: { friendId: userId }, select: { id: true } },
+            friendOf: { where: { userId }, select: { id: true } },
+          },
+        },
+      },
+    });
+
+    return games.map((game) => {
+      const rival =
+        game.firstPlayer.id === userId ? game.secondPlayer : game.firstPlayer;
+
+      if (!rival) return { ...game, rival: null };
+
+      const { friends, friendOf, ...rivalData } = rival as any;
+
+      return {
+        id: game.id,
+        winnerId: game.winnerId,
+        rival: {
+          ...rivalData,
+          isFriend: friends.length > 0 || friendOf.length > 0,
+        },
+      };
+    });
   }
 }

@@ -55,6 +55,8 @@ export type GameMinAggregateOutputType = {
   firstPlayerScore: number | null
   secondPlayerScore: number | null
   winnerId: string | null
+  firstPlayerDrawRequest: boolean | null
+  secondPlayerDrawRequest: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -72,6 +74,8 @@ export type GameMaxAggregateOutputType = {
   firstPlayerScore: number | null
   secondPlayerScore: number | null
   winnerId: string | null
+  firstPlayerDrawRequest: boolean | null
+  secondPlayerDrawRequest: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -90,6 +94,8 @@ export type GameCountAggregateOutputType = {
   firstPlayerScore: number
   secondPlayerScore: number
   winnerId: number
+  firstPlayerDrawRequest: number
+  secondPlayerDrawRequest: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -125,6 +131,8 @@ export type GameMinAggregateInputType = {
   firstPlayerScore?: true
   secondPlayerScore?: true
   winnerId?: true
+  firstPlayerDrawRequest?: true
+  secondPlayerDrawRequest?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -142,6 +150,8 @@ export type GameMaxAggregateInputType = {
   firstPlayerScore?: true
   secondPlayerScore?: true
   winnerId?: true
+  firstPlayerDrawRequest?: true
+  secondPlayerDrawRequest?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -160,6 +170,8 @@ export type GameCountAggregateInputType = {
   firstPlayerScore?: true
   secondPlayerScore?: true
   winnerId?: true
+  firstPlayerDrawRequest?: true
+  secondPlayerDrawRequest?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -265,6 +277,8 @@ export type GameGroupByOutputType = {
   firstPlayerScore: number
   secondPlayerScore: number
   winnerId: string | null
+  firstPlayerDrawRequest: boolean
+  secondPlayerDrawRequest: boolean
   createdAt: Date
   updatedAt: Date
   _count: GameCountAggregateOutputType | null
@@ -306,6 +320,8 @@ export type GameWhereInput = {
   firstPlayerScore?: Prisma.IntFilter<"Game"> | number
   secondPlayerScore?: Prisma.IntFilter<"Game"> | number
   winnerId?: Prisma.StringNullableFilter<"Game"> | string | null
+  firstPlayerDrawRequest?: Prisma.BoolFilter<"Game"> | boolean
+  secondPlayerDrawRequest?: Prisma.BoolFilter<"Game"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Game"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Game"> | Date | string
   firstPlayer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -327,6 +343,8 @@ export type GameOrderByWithRelationInput = {
   firstPlayerScore?: Prisma.SortOrder
   secondPlayerScore?: Prisma.SortOrder
   winnerId?: Prisma.SortOrderInput | Prisma.SortOrder
+  firstPlayerDrawRequest?: Prisma.SortOrder
+  secondPlayerDrawRequest?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   firstPlayer?: Prisma.UserOrderByWithRelationInput
@@ -351,6 +369,8 @@ export type GameWhereUniqueInput = Prisma.AtLeast<{
   firstPlayerScore?: Prisma.IntFilter<"Game"> | number
   secondPlayerScore?: Prisma.IntFilter<"Game"> | number
   winnerId?: Prisma.StringNullableFilter<"Game"> | string | null
+  firstPlayerDrawRequest?: Prisma.BoolFilter<"Game"> | boolean
+  secondPlayerDrawRequest?: Prisma.BoolFilter<"Game"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Game"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Game"> | Date | string
   firstPlayer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -372,6 +392,8 @@ export type GameOrderByWithAggregationInput = {
   firstPlayerScore?: Prisma.SortOrder
   secondPlayerScore?: Prisma.SortOrder
   winnerId?: Prisma.SortOrderInput | Prisma.SortOrder
+  firstPlayerDrawRequest?: Prisma.SortOrder
+  secondPlayerDrawRequest?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.GameCountOrderByAggregateInput
@@ -398,6 +420,8 @@ export type GameScalarWhereWithAggregatesInput = {
   firstPlayerScore?: Prisma.IntWithAggregatesFilter<"Game"> | number
   secondPlayerScore?: Prisma.IntWithAggregatesFilter<"Game"> | number
   winnerId?: Prisma.StringNullableWithAggregatesFilter<"Game"> | string | null
+  firstPlayerDrawRequest?: Prisma.BoolWithAggregatesFilter<"Game"> | boolean
+  secondPlayerDrawRequest?: Prisma.BoolWithAggregatesFilter<"Game"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Game"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Game"> | Date | string
 }
@@ -414,6 +438,8 @@ export type GameCreateInput = {
   firstPlayerScore?: number
   secondPlayerScore?: number
   winnerId?: string | null
+  firstPlayerDrawRequest?: boolean
+  secondPlayerDrawRequest?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   firstPlayer: Prisma.UserCreateNestedOneWithoutGamesAsFirstInput
@@ -435,6 +461,8 @@ export type GameUncheckedCreateInput = {
   firstPlayerScore?: number
   secondPlayerScore?: number
   winnerId?: string | null
+  firstPlayerDrawRequest?: boolean
+  secondPlayerDrawRequest?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   relatedNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutGameInput
@@ -452,6 +480,8 @@ export type GameUpdateInput = {
   firstPlayerScore?: Prisma.IntFieldUpdateOperationsInput | number
   secondPlayerScore?: Prisma.IntFieldUpdateOperationsInput | number
   winnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstPlayerDrawRequest?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  secondPlayerDrawRequest?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   firstPlayer?: Prisma.UserUpdateOneRequiredWithoutGamesAsFirstNestedInput
@@ -473,6 +503,8 @@ export type GameUncheckedUpdateInput = {
   firstPlayerScore?: Prisma.IntFieldUpdateOperationsInput | number
   secondPlayerScore?: Prisma.IntFieldUpdateOperationsInput | number
   winnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstPlayerDrawRequest?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  secondPlayerDrawRequest?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   relatedNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutGameNestedInput
@@ -492,6 +524,8 @@ export type GameCreateManyInput = {
   firstPlayerScore?: number
   secondPlayerScore?: number
   winnerId?: string | null
+  firstPlayerDrawRequest?: boolean
+  secondPlayerDrawRequest?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -508,6 +542,8 @@ export type GameUpdateManyMutationInput = {
   firstPlayerScore?: Prisma.IntFieldUpdateOperationsInput | number
   secondPlayerScore?: Prisma.IntFieldUpdateOperationsInput | number
   winnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstPlayerDrawRequest?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  secondPlayerDrawRequest?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -526,6 +562,8 @@ export type GameUncheckedUpdateManyInput = {
   firstPlayerScore?: Prisma.IntFieldUpdateOperationsInput | number
   secondPlayerScore?: Prisma.IntFieldUpdateOperationsInput | number
   winnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstPlayerDrawRequest?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  secondPlayerDrawRequest?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -562,6 +600,8 @@ export type GameCountOrderByAggregateInput = {
   firstPlayerScore?: Prisma.SortOrder
   secondPlayerScore?: Prisma.SortOrder
   winnerId?: Prisma.SortOrder
+  firstPlayerDrawRequest?: Prisma.SortOrder
+  secondPlayerDrawRequest?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -587,6 +627,8 @@ export type GameMaxOrderByAggregateInput = {
   firstPlayerScore?: Prisma.SortOrder
   secondPlayerScore?: Prisma.SortOrder
   winnerId?: Prisma.SortOrder
+  firstPlayerDrawRequest?: Prisma.SortOrder
+  secondPlayerDrawRequest?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -604,6 +646,8 @@ export type GameMinOrderByAggregateInput = {
   firstPlayerScore?: Prisma.SortOrder
   secondPlayerScore?: Prisma.SortOrder
   winnerId?: Prisma.SortOrder
+  firstPlayerDrawRequest?: Prisma.SortOrder
+  secondPlayerDrawRequest?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -734,12 +778,8 @@ export type EnumGameRoleFieldUpdateOperationsInput = {
   set?: $Enums.GameRole
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
 }
 
 export type GameCreateNestedOneWithoutRelatedNotificationsInput = {
@@ -770,6 +810,8 @@ export type GameCreateWithoutFirstPlayerInput = {
   firstPlayerScore?: number
   secondPlayerScore?: number
   winnerId?: string | null
+  firstPlayerDrawRequest?: boolean
+  secondPlayerDrawRequest?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   secondPlayer?: Prisma.UserCreateNestedOneWithoutGamesAsSecondInput
@@ -789,6 +831,8 @@ export type GameUncheckedCreateWithoutFirstPlayerInput = {
   firstPlayerScore?: number
   secondPlayerScore?: number
   winnerId?: string | null
+  firstPlayerDrawRequest?: boolean
+  secondPlayerDrawRequest?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   relatedNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutGameInput
@@ -816,6 +860,8 @@ export type GameCreateWithoutSecondPlayerInput = {
   firstPlayerScore?: number
   secondPlayerScore?: number
   winnerId?: string | null
+  firstPlayerDrawRequest?: boolean
+  secondPlayerDrawRequest?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   firstPlayer: Prisma.UserCreateNestedOneWithoutGamesAsFirstInput
@@ -835,6 +881,8 @@ export type GameUncheckedCreateWithoutSecondPlayerInput = {
   firstPlayerScore?: number
   secondPlayerScore?: number
   winnerId?: string | null
+  firstPlayerDrawRequest?: boolean
+  secondPlayerDrawRequest?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   relatedNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutGameInput
@@ -883,6 +931,8 @@ export type GameScalarWhereInput = {
   firstPlayerScore?: Prisma.IntFilter<"Game"> | number
   secondPlayerScore?: Prisma.IntFilter<"Game"> | number
   winnerId?: Prisma.StringNullableFilter<"Game"> | string | null
+  firstPlayerDrawRequest?: Prisma.BoolFilter<"Game"> | boolean
+  secondPlayerDrawRequest?: Prisma.BoolFilter<"Game"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Game"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Game"> | Date | string
 }
@@ -915,6 +965,8 @@ export type GameCreateWithoutRelatedNotificationsInput = {
   firstPlayerScore?: number
   secondPlayerScore?: number
   winnerId?: string | null
+  firstPlayerDrawRequest?: boolean
+  secondPlayerDrawRequest?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   firstPlayer: Prisma.UserCreateNestedOneWithoutGamesAsFirstInput
@@ -935,6 +987,8 @@ export type GameUncheckedCreateWithoutRelatedNotificationsInput = {
   firstPlayerScore?: number
   secondPlayerScore?: number
   winnerId?: string | null
+  firstPlayerDrawRequest?: boolean
+  secondPlayerDrawRequest?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -967,6 +1021,8 @@ export type GameUpdateWithoutRelatedNotificationsInput = {
   firstPlayerScore?: Prisma.IntFieldUpdateOperationsInput | number
   secondPlayerScore?: Prisma.IntFieldUpdateOperationsInput | number
   winnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstPlayerDrawRequest?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  secondPlayerDrawRequest?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   firstPlayer?: Prisma.UserUpdateOneRequiredWithoutGamesAsFirstNestedInput
@@ -987,6 +1043,8 @@ export type GameUncheckedUpdateWithoutRelatedNotificationsInput = {
   firstPlayerScore?: Prisma.IntFieldUpdateOperationsInput | number
   secondPlayerScore?: Prisma.IntFieldUpdateOperationsInput | number
   winnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstPlayerDrawRequest?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  secondPlayerDrawRequest?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1004,6 +1062,8 @@ export type GameCreateManyFirstPlayerInput = {
   firstPlayerScore?: number
   secondPlayerScore?: number
   winnerId?: string | null
+  firstPlayerDrawRequest?: boolean
+  secondPlayerDrawRequest?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1021,6 +1081,8 @@ export type GameCreateManySecondPlayerInput = {
   firstPlayerScore?: number
   secondPlayerScore?: number
   winnerId?: string | null
+  firstPlayerDrawRequest?: boolean
+  secondPlayerDrawRequest?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1037,6 +1099,8 @@ export type GameUpdateWithoutFirstPlayerInput = {
   firstPlayerScore?: Prisma.IntFieldUpdateOperationsInput | number
   secondPlayerScore?: Prisma.IntFieldUpdateOperationsInput | number
   winnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstPlayerDrawRequest?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  secondPlayerDrawRequest?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   secondPlayer?: Prisma.UserUpdateOneWithoutGamesAsSecondNestedInput
@@ -1056,6 +1120,8 @@ export type GameUncheckedUpdateWithoutFirstPlayerInput = {
   firstPlayerScore?: Prisma.IntFieldUpdateOperationsInput | number
   secondPlayerScore?: Prisma.IntFieldUpdateOperationsInput | number
   winnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstPlayerDrawRequest?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  secondPlayerDrawRequest?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   relatedNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutGameNestedInput
@@ -1074,6 +1140,8 @@ export type GameUncheckedUpdateManyWithoutFirstPlayerInput = {
   firstPlayerScore?: Prisma.IntFieldUpdateOperationsInput | number
   secondPlayerScore?: Prisma.IntFieldUpdateOperationsInput | number
   winnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstPlayerDrawRequest?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  secondPlayerDrawRequest?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1090,6 +1158,8 @@ export type GameUpdateWithoutSecondPlayerInput = {
   firstPlayerScore?: Prisma.IntFieldUpdateOperationsInput | number
   secondPlayerScore?: Prisma.IntFieldUpdateOperationsInput | number
   winnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstPlayerDrawRequest?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  secondPlayerDrawRequest?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   firstPlayer?: Prisma.UserUpdateOneRequiredWithoutGamesAsFirstNestedInput
@@ -1109,6 +1179,8 @@ export type GameUncheckedUpdateWithoutSecondPlayerInput = {
   firstPlayerScore?: Prisma.IntFieldUpdateOperationsInput | number
   secondPlayerScore?: Prisma.IntFieldUpdateOperationsInput | number
   winnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstPlayerDrawRequest?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  secondPlayerDrawRequest?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   relatedNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutGameNestedInput
@@ -1127,6 +1199,8 @@ export type GameUncheckedUpdateManyWithoutSecondPlayerInput = {
   firstPlayerScore?: Prisma.IntFieldUpdateOperationsInput | number
   secondPlayerScore?: Prisma.IntFieldUpdateOperationsInput | number
   winnerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstPlayerDrawRequest?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  secondPlayerDrawRequest?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1176,6 +1250,8 @@ export type GameSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   firstPlayerScore?: boolean
   secondPlayerScore?: boolean
   winnerId?: boolean
+  firstPlayerDrawRequest?: boolean
+  secondPlayerDrawRequest?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   firstPlayer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1198,6 +1274,8 @@ export type GameSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   firstPlayerScore?: boolean
   secondPlayerScore?: boolean
   winnerId?: boolean
+  firstPlayerDrawRequest?: boolean
+  secondPlayerDrawRequest?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   firstPlayer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1218,6 +1296,8 @@ export type GameSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   firstPlayerScore?: boolean
   secondPlayerScore?: boolean
   winnerId?: boolean
+  firstPlayerDrawRequest?: boolean
+  secondPlayerDrawRequest?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   firstPlayer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1238,11 +1318,13 @@ export type GameSelectScalar = {
   firstPlayerScore?: boolean
   secondPlayerScore?: boolean
   winnerId?: boolean
+  firstPlayerDrawRequest?: boolean
+  secondPlayerDrawRequest?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type GameOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "status" | "visibility" | "firstPlayerId" | "secondPlayerId" | "board" | "firstAce" | "secondAce" | "firstPlayerRole" | "currentTurn" | "firstPlayerScore" | "secondPlayerScore" | "winnerId" | "createdAt" | "updatedAt", ExtArgs["result"]["game"]>
+export type GameOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "status" | "visibility" | "firstPlayerId" | "secondPlayerId" | "board" | "firstAce" | "secondAce" | "firstPlayerRole" | "currentTurn" | "firstPlayerScore" | "secondPlayerScore" | "winnerId" | "firstPlayerDrawRequest" | "secondPlayerDrawRequest" | "createdAt" | "updatedAt", ExtArgs["result"]["game"]>
 export type GameInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   firstPlayer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   secondPlayer?: boolean | Prisma.Game$secondPlayerArgs<ExtArgs>
@@ -1279,6 +1361,8 @@ export type $GamePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     firstPlayerScore: number
     secondPlayerScore: number
     winnerId: string | null
+    firstPlayerDrawRequest: boolean
+    secondPlayerDrawRequest: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["game"]>
@@ -1720,6 +1804,8 @@ export interface GameFieldRefs {
   readonly firstPlayerScore: Prisma.FieldRef<"Game", 'Int'>
   readonly secondPlayerScore: Prisma.FieldRef<"Game", 'Int'>
   readonly winnerId: Prisma.FieldRef<"Game", 'String'>
+  readonly firstPlayerDrawRequest: Prisma.FieldRef<"Game", 'Boolean'>
+  readonly secondPlayerDrawRequest: Prisma.FieldRef<"Game", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Game", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Game", 'DateTime'>
 }

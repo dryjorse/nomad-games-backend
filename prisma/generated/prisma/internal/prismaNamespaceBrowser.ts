@@ -80,6 +80,7 @@ export const UserScalarFieldEnum = {
   password: 'password',
   username: 'username',
   ava: 'ava',
+  wins: 'wins',
   resetToken: 'resetToken',
   resetTokenExpiresAt: 'resetTokenExpiresAt',
   createdAt: 'createdAt'
@@ -121,6 +122,8 @@ export const GameScalarFieldEnum = {
   firstPlayerScore: 'firstPlayerScore',
   secondPlayerScore: 'secondPlayerScore',
   winnerId: 'winnerId',
+  firstPlayerDrawRequest: 'firstPlayerDrawRequest',
+  secondPlayerDrawRequest: 'secondPlayerDrawRequest',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

@@ -20,8 +20,18 @@ export type UserModel = runtime.Types.Result.DefaultSelection<Prisma.$UserPayloa
 
 export type AggregateUser = {
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
+}
+
+export type UserAvgAggregateOutputType = {
+  wins: number | null
+}
+
+export type UserSumAggregateOutputType = {
+  wins: number | null
 }
 
 export type UserMinAggregateOutputType = {
@@ -30,6 +40,7 @@ export type UserMinAggregateOutputType = {
   password: string | null
   username: string | null
   ava: string | null
+  wins: number | null
   resetToken: string | null
   resetTokenExpiresAt: Date | null
   createdAt: Date | null
@@ -41,6 +52,7 @@ export type UserMaxAggregateOutputType = {
   password: string | null
   username: string | null
   ava: string | null
+  wins: number | null
   resetToken: string | null
   resetTokenExpiresAt: Date | null
   createdAt: Date | null
@@ -52,6 +64,7 @@ export type UserCountAggregateOutputType = {
   password: number
   username: number
   ava: number
+  wins: number
   resetToken: number
   resetTokenExpiresAt: number
   createdAt: number
@@ -59,12 +72,21 @@ export type UserCountAggregateOutputType = {
 }
 
 
+export type UserAvgAggregateInputType = {
+  wins?: true
+}
+
+export type UserSumAggregateInputType = {
+  wins?: true
+}
+
 export type UserMinAggregateInputType = {
   id?: true
   email?: true
   password?: true
   username?: true
   ava?: true
+  wins?: true
   resetToken?: true
   resetTokenExpiresAt?: true
   createdAt?: true
@@ -76,6 +98,7 @@ export type UserMaxAggregateInputType = {
   password?: true
   username?: true
   ava?: true
+  wins?: true
   resetToken?: true
   resetTokenExpiresAt?: true
   createdAt?: true
@@ -87,6 +110,7 @@ export type UserCountAggregateInputType = {
   password?: true
   username?: true
   ava?: true
+  wins?: true
   resetToken?: true
   resetTokenExpiresAt?: true
   createdAt?: true
@@ -131,6 +155,18 @@ export type UserAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: UserAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: UserSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: UserMinAggregateInputType
@@ -161,6 +197,8 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   _count?: UserCountAggregateInputType | true
+  _avg?: UserAvgAggregateInputType
+  _sum?: UserSumAggregateInputType
   _min?: UserMinAggregateInputType
   _max?: UserMaxAggregateInputType
 }
@@ -171,10 +209,13 @@ export type UserGroupByOutputType = {
   password: string
   username: string
   ava: string | null
+  wins: number
   resetToken: string | null
   resetTokenExpiresAt: Date | null
   createdAt: Date
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
 }
@@ -203,6 +244,7 @@ export type UserWhereInput = {
   password?: Prisma.StringFilter<"User"> | string
   username?: Prisma.StringFilter<"User"> | string
   ava?: Prisma.StringNullableFilter<"User"> | string | null
+  wins?: Prisma.IntFilter<"User"> | number
   resetToken?: Prisma.StringNullableFilter<"User"> | string | null
   resetTokenExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -221,6 +263,7 @@ export type UserOrderByWithRelationInput = {
   password?: Prisma.SortOrder
   username?: Prisma.SortOrder
   ava?: Prisma.SortOrderInput | Prisma.SortOrder
+  wins?: Prisma.SortOrder
   resetToken?: Prisma.SortOrderInput | Prisma.SortOrder
   resetTokenExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -242,6 +285,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   password?: Prisma.StringFilter<"User"> | string
   ava?: Prisma.StringNullableFilter<"User"> | string | null
+  wins?: Prisma.IntFilter<"User"> | number
   resetToken?: Prisma.StringNullableFilter<"User"> | string | null
   resetTokenExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -260,12 +304,15 @@ export type UserOrderByWithAggregationInput = {
   password?: Prisma.SortOrder
   username?: Prisma.SortOrder
   ava?: Prisma.SortOrderInput | Prisma.SortOrder
+  wins?: Prisma.SortOrder
   resetToken?: Prisma.SortOrderInput | Prisma.SortOrder
   resetTokenExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
+  _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
+  _sum?: Prisma.UserSumOrderByAggregateInput
 }
 
 export type UserScalarWhereWithAggregatesInput = {
@@ -277,6 +324,7 @@ export type UserScalarWhereWithAggregatesInput = {
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
   username?: Prisma.StringWithAggregatesFilter<"User"> | string
   ava?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  wins?: Prisma.IntWithAggregatesFilter<"User"> | number
   resetToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   resetTokenExpiresAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -288,6 +336,7 @@ export type UserCreateInput = {
   password: string
   username: string
   ava?: string | null
+  wins?: number
   resetToken?: string | null
   resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -306,6 +355,7 @@ export type UserUncheckedCreateInput = {
   password: string
   username: string
   ava?: string | null
+  wins?: number
   resetToken?: string | null
   resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -324,6 +374,7 @@ export type UserUpdateInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wins?: Prisma.IntFieldUpdateOperationsInput | number
   resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -342,6 +393,7 @@ export type UserUncheckedUpdateInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wins?: Prisma.IntFieldUpdateOperationsInput | number
   resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -360,6 +412,7 @@ export type UserCreateManyInput = {
   password: string
   username: string
   ava?: string | null
+  wins?: number
   resetToken?: string | null
   resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -371,6 +424,7 @@ export type UserUpdateManyMutationInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wins?: Prisma.IntFieldUpdateOperationsInput | number
   resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -382,6 +436,7 @@ export type UserUncheckedUpdateManyInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wins?: Prisma.IntFieldUpdateOperationsInput | number
   resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -393,9 +448,14 @@ export type UserCountOrderByAggregateInput = {
   password?: Prisma.SortOrder
   username?: Prisma.SortOrder
   ava?: Prisma.SortOrder
+  wins?: Prisma.SortOrder
   resetToken?: Prisma.SortOrder
   resetTokenExpiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+}
+
+export type UserAvgOrderByAggregateInput = {
+  wins?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -404,6 +464,7 @@ export type UserMaxOrderByAggregateInput = {
   password?: Prisma.SortOrder
   username?: Prisma.SortOrder
   ava?: Prisma.SortOrder
+  wins?: Prisma.SortOrder
   resetToken?: Prisma.SortOrder
   resetTokenExpiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -415,9 +476,14 @@ export type UserMinOrderByAggregateInput = {
   password?: Prisma.SortOrder
   username?: Prisma.SortOrder
   ava?: Prisma.SortOrder
+  wins?: Prisma.SortOrder
   resetToken?: Prisma.SortOrder
   resetTokenExpiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+}
+
+export type UserSumOrderByAggregateInput = {
+  wins?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -436,6 +502,14 @@ export type StringFieldUpdateOperationsInput = {
 
 export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
+}
+
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -552,6 +626,7 @@ export type UserCreateWithoutFriendsInput = {
   password: string
   username: string
   ava?: string | null
+  wins?: number
   resetToken?: string | null
   resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -569,6 +644,7 @@ export type UserUncheckedCreateWithoutFriendsInput = {
   password: string
   username: string
   ava?: string | null
+  wins?: number
   resetToken?: string | null
   resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -591,6 +667,7 @@ export type UserCreateWithoutFriendOfInput = {
   password: string
   username: string
   ava?: string | null
+  wins?: number
   resetToken?: string | null
   resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -608,6 +685,7 @@ export type UserUncheckedCreateWithoutFriendOfInput = {
   password: string
   username: string
   ava?: string | null
+  wins?: number
   resetToken?: string | null
   resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -641,6 +719,7 @@ export type UserUpdateWithoutFriendsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wins?: Prisma.IntFieldUpdateOperationsInput | number
   resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -658,6 +737,7 @@ export type UserUncheckedUpdateWithoutFriendsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wins?: Prisma.IntFieldUpdateOperationsInput | number
   resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -686,6 +766,7 @@ export type UserUpdateWithoutFriendOfInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wins?: Prisma.IntFieldUpdateOperationsInput | number
   resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -703,6 +784,7 @@ export type UserUncheckedUpdateWithoutFriendOfInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wins?: Prisma.IntFieldUpdateOperationsInput | number
   resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -720,6 +802,7 @@ export type UserCreateWithoutQueueInput = {
   password: string
   username: string
   ava?: string | null
+  wins?: number
   resetToken?: string | null
   resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -737,6 +820,7 @@ export type UserUncheckedCreateWithoutQueueInput = {
   password: string
   username: string
   ava?: string | null
+  wins?: number
   resetToken?: string | null
   resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -770,6 +854,7 @@ export type UserUpdateWithoutQueueInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wins?: Prisma.IntFieldUpdateOperationsInput | number
   resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -787,6 +872,7 @@ export type UserUncheckedUpdateWithoutQueueInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wins?: Prisma.IntFieldUpdateOperationsInput | number
   resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -804,6 +890,7 @@ export type UserCreateWithoutGamesAsFirstInput = {
   password: string
   username: string
   ava?: string | null
+  wins?: number
   resetToken?: string | null
   resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -821,6 +908,7 @@ export type UserUncheckedCreateWithoutGamesAsFirstInput = {
   password: string
   username: string
   ava?: string | null
+  wins?: number
   resetToken?: string | null
   resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -843,6 +931,7 @@ export type UserCreateWithoutGamesAsSecondInput = {
   password: string
   username: string
   ava?: string | null
+  wins?: number
   resetToken?: string | null
   resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -860,6 +949,7 @@ export type UserUncheckedCreateWithoutGamesAsSecondInput = {
   password: string
   username: string
   ava?: string | null
+  wins?: number
   resetToken?: string | null
   resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -893,6 +983,7 @@ export type UserUpdateWithoutGamesAsFirstInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wins?: Prisma.IntFieldUpdateOperationsInput | number
   resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -910,6 +1001,7 @@ export type UserUncheckedUpdateWithoutGamesAsFirstInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wins?: Prisma.IntFieldUpdateOperationsInput | number
   resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -938,6 +1030,7 @@ export type UserUpdateWithoutGamesAsSecondInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wins?: Prisma.IntFieldUpdateOperationsInput | number
   resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -955,6 +1048,7 @@ export type UserUncheckedUpdateWithoutGamesAsSecondInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wins?: Prisma.IntFieldUpdateOperationsInput | number
   resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -972,6 +1066,7 @@ export type UserCreateWithoutNotificationsInput = {
   password: string
   username: string
   ava?: string | null
+  wins?: number
   resetToken?: string | null
   resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -989,6 +1084,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   password: string
   username: string
   ava?: string | null
+  wins?: number
   resetToken?: string | null
   resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -1011,6 +1107,7 @@ export type UserCreateWithoutRelatedNotificationsInput = {
   password: string
   username: string
   ava?: string | null
+  wins?: number
   resetToken?: string | null
   resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -1028,6 +1125,7 @@ export type UserUncheckedCreateWithoutRelatedNotificationsInput = {
   password: string
   username: string
   ava?: string | null
+  wins?: number
   resetToken?: string | null
   resetTokenExpiresAt?: Date | string | null
   createdAt?: Date | string
@@ -1061,6 +1159,7 @@ export type UserUpdateWithoutNotificationsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wins?: Prisma.IntFieldUpdateOperationsInput | number
   resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1078,6 +1177,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wins?: Prisma.IntFieldUpdateOperationsInput | number
   resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1106,6 +1206,7 @@ export type UserUpdateWithoutRelatedNotificationsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wins?: Prisma.IntFieldUpdateOperationsInput | number
   resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1123,6 +1224,7 @@ export type UserUncheckedUpdateWithoutRelatedNotificationsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   ava?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  wins?: Prisma.IntFieldUpdateOperationsInput | number
   resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1216,6 +1318,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   password?: boolean
   username?: boolean
   ava?: boolean
+  wins?: boolean
   resetToken?: boolean
   resetTokenExpiresAt?: boolean
   createdAt?: boolean
@@ -1235,6 +1338,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   password?: boolean
   username?: boolean
   ava?: boolean
+  wins?: boolean
   resetToken?: boolean
   resetTokenExpiresAt?: boolean
   createdAt?: boolean
@@ -1246,6 +1350,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   password?: boolean
   username?: boolean
   ava?: boolean
+  wins?: boolean
   resetToken?: boolean
   resetTokenExpiresAt?: boolean
   createdAt?: boolean
@@ -1257,12 +1362,13 @@ export type UserSelectScalar = {
   password?: boolean
   username?: boolean
   ava?: boolean
+  wins?: boolean
   resetToken?: boolean
   resetTokenExpiresAt?: boolean
   createdAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "username" | "ava" | "resetToken" | "resetTokenExpiresAt" | "createdAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "username" | "ava" | "wins" | "resetToken" | "resetTokenExpiresAt" | "createdAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   gamesAsFirst?: boolean | Prisma.User$gamesAsFirstArgs<ExtArgs>
   gamesAsSecond?: boolean | Prisma.User$gamesAsSecondArgs<ExtArgs>
@@ -1293,6 +1399,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     password: string
     username: string
     ava: string | null
+    wins: number
     resetToken: string | null
     resetTokenExpiresAt: Date | null
     createdAt: Date
@@ -1731,6 +1838,7 @@ export interface UserFieldRefs {
   readonly password: Prisma.FieldRef<"User", 'String'>
   readonly username: Prisma.FieldRef<"User", 'String'>
   readonly ava: Prisma.FieldRef<"User", 'String'>
+  readonly wins: Prisma.FieldRef<"User", 'Int'>
   readonly resetToken: Prisma.FieldRef<"User", 'String'>
   readonly resetTokenExpiresAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>

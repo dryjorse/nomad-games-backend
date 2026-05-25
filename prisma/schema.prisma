@@ -20,6 +20,7 @@ model User {
   queue                Queue?
   friends              Friendship[]   @relation("UserFriends")
   friendOf             Friendship[]   @relation("FriendOf")
+  wins                 Int            @default(0)
   resetToken           String?
   resetTokenExpiresAt  DateTime?
   createdAt            DateTime       @default(now())
@@ -44,24 +45,26 @@ model Queue {
 }
 
 model Game {
-  id                   String         @id @default(ulid())
-  status               GameStatus     @default(WAITING)
-  visibility           GameVisibility @default(PUBLIC)
-  firstPlayerId        String 
-  firstPlayer          User           @relation("FirstPlayer", fields: [firstPlayerId], references: [id])
-  secondPlayerId       String? 
-  secondPlayer         User?          @relation("SecondPlayer", fields: [secondPlayerId], references: [id])
-  board                Int[]          @default([9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9])
-  firstAce             Int?
-  secondAce            Int?
-  firstPlayerRole      GameRole       @default(WHITE)
-  currentTurn          GameRole       @default(WHITE)
-  firstPlayerScore     Int            @default(0)
-  secondPlayerScore    Int            @default(0) 
-  winnerId             String?
-  relatedNotifications Notification[] @relation()
-  createdAt            DateTime       @default(now())
-  updatedAt            DateTime       @updatedAt
+  id                      String         @id @default(ulid())
+  status                  GameStatus     @default(WAITING)
+  visibility              GameVisibility @default(PUBLIC)
+  firstPlayerId           String 
+  firstPlayer             User           @relation("FirstPlayer", fields: [firstPlayerId], references: [id])
+  secondPlayerId          String? 
+  secondPlayer            User?          @relation("SecondPlayer", fields: [secondPlayerId], references: [id])
+  board                   Int[]          @default([9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9])
+  firstAce                Int?
+  secondAce               Int?
+  firstPlayerRole         GameRole       @default(WHITE)
+  currentTurn             GameRole       @default(WHITE)
+  firstPlayerScore        Int            @default(0)
+  secondPlayerScore       Int            @default(0) 
+  winnerId                String?
+  firstPlayerDrawRequest  Boolean        @default(false)
+  secondPlayerDrawRequest Boolean        @default(false)
+  relatedNotifications    Notification[] @relation()
+  createdAt               DateTime       @default(now())
+  updatedAt               DateTime       @updatedAt
 }
 
 enum GameStatus {
