@@ -1,26 +1,32 @@
 import { Body, Controller, Post, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import {
-  ForgorPasswordDto,
-  LoginUserDto,
-  RegisterDto,
-  ResetPasswordDto,
+  ForgorPasswordDTO,
+  LoginResponseDTO,
+  LoginUserDTO,
+  RefreshDTO,
+  RegisterDTO,
+  RegisterResponseDTO,
+  ResetPasswordDTO,
 } from './auth.dto';
+import { ApiOkResponse } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('register')
-  async register(@Body() registerDto: RegisterDto) {
-    return this.authService.register(registerDto);
+  @ApiOkResponse({ type: RegisterResponseDTO })
+  async register(@Body() registerDTO: RegisterDTO) {
+    return this.authService.register(registerDTO);
   }
 
   @Post('login')
-  async login(@Body() loginDto: LoginUserDto) {
+  @ApiOkResponse({ type: LoginResponseDTO })
+  async login(@Body() loginDTO: LoginUserDTO) {
     const user = await this.authService.validateUser(
-      loginDto.username,
-      loginDto.password,
+      loginDTO.username,
+      loginDTO.password,
     );
 
     if (user instanceof UnauthorizedException) {
@@ -31,7 +37,8 @@ export class AuthController {
   }
 
   @Post('refresh')
-  async refresh(@Body('refreshToken') refreshToken: string) {
+  @ApiOkResponse({ type: LoginResponseDTO })
+  async refresh(@Body() { refreshToken }: RefreshDTO) {
     const payload = this.authService.verifyToken(refreshToken);
     if (payload instanceof UnauthorizedException) {
       throw payload;
@@ -50,12 +57,12 @@ export class AuthController {
   }
 
   @Post('forgot-password')
-  async forgotPassword(@Body() forgotPasswordDto: ForgorPasswordDto) {
-    return this.authService.forgotPassword(forgotPasswordDto.email);
+  async forgotPassword(@Body() forgotPasswordDTO: ForgorPasswordDTO) {
+    return this.authService.forgotPassword(forgotPasswordDTO.email);
   }
 
   @Post('reset-password')
-  async resetPassword(@Body() dto: ResetPasswordDto) {
+  async resetPassword(@Body() dto: ResetPasswordDTO) {
     return this.authService.resetPassword(dto.token, dto.password);
   }
 }

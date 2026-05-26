@@ -6,8 +6,9 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
+import { UserDTO } from '../user/user.dto';
 
-export class RegisterDto {
+export class RegisterDTO {
   @IsEmail()
   email: string;
 
@@ -27,23 +28,27 @@ export class RegisterDto {
   username: string;
 }
 
-export class LoginUserDto {
+export class LoginUserDTO {
   @IsNotEmpty()
   username: string;
 
   @IsNotEmpty()
   @MinLength(6)
   password: string;
-
-  id: string;
 }
 
-export class ForgorPasswordDto {
+export class RefreshDTO {
+  @IsNotEmpty()
+  @IsString()
+  refreshToken: string;
+}
+
+export class ForgorPasswordDTO {
   @IsEmail()
   email: string;
 }
 
-export class ResetPasswordDto {
+export class ResetPasswordDTO {
   @IsString()
   token: string;
 
@@ -51,3 +56,13 @@ export class ResetPasswordDto {
   @MinLength(6)
   password: string;
 }
+
+export class RegisterResponseDTO {
+  tokens: {
+    accessToken: string;
+    refreshToken: string;
+  };
+  user: UserDTO;
+}
+
+export class LoginResponseDTO extends RegisterResponseDTO {}

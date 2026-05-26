@@ -15,20 +15,25 @@ import { extname } from 'path';
 import { ProfileService } from './profile.service';
 import { AuthGuard } from '../auth/auth.guard';
 import { IRequest } from 'src/common/types';
-import { UpdateProfileDto } from './profile.dto';
+import { ChangeAvatarResponseDTO, UpdateProfileDTO } from './profile.dto';
+import { ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
+import { UserDTO } from '../user/user.dto';
 
+@ApiBearerAuth()
 @UseGuards(AuthGuard)
 @Controller('profile')
 export class ProfileController {
   constructor(private readonly profileService: ProfileService) {}
 
   @Get()
+  @ApiOkResponse({ type: UserDTO })
   async getProfile(@Req() req: IRequest) {
     return this.profileService.getProfile(req.user.sub);
   }
 
   @Patch()
-  async updateProfile(@Req() req: IRequest, @Body() dto: UpdateProfileDto) {
+  @ApiOkResponse({ type: UserDTO })
+  async updateProfile(@Req() req: IRequest, @Body() dto: UpdateProfileDTO) {
     return this.profileService.updateProfile(req.user.sub, dto);
   }
 
@@ -52,6 +57,7 @@ export class ProfileController {
       limits: { fileSize: 5 * 1024 * 1024 },
     }),
   )
+  @ApiOkResponse({ type: ChangeAvatarResponseDTO })
   async updateAvatar(
     @Req() req: IRequest,
     @UploadedFile() file: Express.Multer.File,

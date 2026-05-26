@@ -1,7 +1,7 @@
 // profile.dto.ts
 import { IsEmail, IsOptional, IsString, MinLength } from 'class-validator';
 
-export class UpdateProfileDto {
+export class UpdateProfileDTO {
   @IsOptional()
   @IsString()
   username?: string;
@@ -22,4 +22,10 @@ export class UpdateProfileDto {
   @IsString()
   @MinLength(6)
   newPassword?: string;
+}
+
+export class ChangeAvatarResponseDTO {
+  username: string;
+  id: string;
+  ava: string | null;
 }

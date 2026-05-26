@@ -1,7 +1,8 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { IsArray, IsEnum, IsOptional, IsUUID } from 'class-validator';
 import { NotificationType } from 'prisma/generated/prisma/enums';
 
-export class CreateNotificationDto {
+export class CreateNotificationDTO {
   @IsEnum(NotificationType)
   type: NotificationType;
 
@@ -13,8 +14,33 @@ export class CreateNotificationDto {
   gameId?: string;
 }
 
-export class ReadNotificationsDto {
+export class ReadNotificationsDTO {
   @IsArray()
   @IsUUID('all', { each: true })
   notifications: string[];
+}
+
+export class NotificationDTO {
+  @ApiProperty({
+    enum: ['GAME_INVITATION', 'FRIEND_REQUEST', 'FRIEND_REQUEST_ACCEPTED'],
+  })
+  type: 'GAME_INVITATION' | 'FRIEND_REQUEST' | 'FRIEND_REQUEST_ACCEPTED';
+
+  userId: string;
+  gameId: string | null;
+  id: string;
+  isRead: boolean;
+  relatedUserId: string;
+  createdAt: Date;
+}
+
+export class NotificationWithRelatedUserDTO extends NotificationDTO {
+  relatedUser: {
+    username: string;
+  };
+}
+
+export class GetNotificationsResponseDTO {
+  count: number;
+  notifications: NotificationDTO[];
 }

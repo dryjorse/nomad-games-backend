@@ -7,7 +7,7 @@ import {
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { RegisterDto } from './auth.dto';
+import { RegisterDTO } from './auth.dto';
 import { MailerService } from '@nestjs-modules/mailer';
 import crypto from 'crypto';
 import { User } from 'prisma/generated/prisma/client';
@@ -20,8 +20,8 @@ export class AuthService {
     private mailerService: MailerService,
   ) {}
 
-  async register(registerDto: RegisterDto) {
-    const { email, password, username } = registerDto;
+  async register(registerDTO: RegisterDTO) {
+    const { email, password, username } = registerDTO;
 
     const existingUser = await this.prisma.user.findFirst({
       where: {
@@ -59,24 +59,33 @@ export class AuthService {
   async validateUser(username: string, password: string) {
     const user = await this.prisma.user.findUnique({
       where: { username },
-      omit: { resetToken: true, resetTokenExpiresAt: true },
+      omit: {
+        password: false,
+        resetToken: true,
+        resetTokenExpiresAt: true,
+      },
     });
 
     if (!user) {
-      return new UnauthorizedException('Неверные учетные данные');
+      throw new UnauthorizedException({
+        code: 'INVALID_CREDENTIALS',
+        message: 'Неверные учетные данные',
+      });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-      return new UnauthorizedException('Неверные учетные данные');
+      throw new UnauthorizedException({
+        code: 'INVALID_CREDENTIALS',
+        message: 'Неверные учетные данные',
+      });
     }
 
     const { password: _, ...result } = user;
 
     return result;
   }
-
   login(user: Omit<User, 'password' | 'resetToken' | 'resetTokenExpiresAt'>) {
     const payload = {
       sub: user.id,

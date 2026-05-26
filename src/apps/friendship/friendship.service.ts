@@ -7,8 +7,8 @@ import {
 import { PrismaService } from 'src/prisma/prisma.service';
 import { NotificationService } from '../notification/notification.service';
 import { paginate } from 'src/common/pagination/paginate';
-import { PaginationDto } from 'src/common/pagination/pagination.dto';
-import { GetFriendsDto } from './friendship.dto';
+import { PaginationDTO } from 'src/common/pagination/pagination.dto';
+import { GetFriendsQueryDTO } from './friendship.dto';
 
 @Injectable()
 export class FriendshipService {
@@ -17,10 +17,10 @@ export class FriendshipService {
     private notificationService: NotificationService,
   ) {}
 
-  async getFriends(userId: string, { q, ...dto }: GetFriendsDto) {
+  async getFriends(userId: string, { q, ...dto }: GetFriendsQueryDTO) {
     const result = await paginate(
       this.prisma.friendship,
-      dto as PaginationDto,
+      dto as PaginationDTO,
       {
         where: {
           OR: [

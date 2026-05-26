@@ -7,7 +7,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
 import * as fs from 'fs';
 import { join } from 'path';
-import { UpdateProfileDto } from './profile.dto';
+import { UpdateProfileDTO } from './profile.dto';
 import { ConfigService } from '@nestjs/config';
 import sharp from 'sharp';
 
@@ -35,7 +35,7 @@ export class ProfileService {
     return user;
   }
 
-  async updateProfile(userId: string, dto: UpdateProfileDto) {
+  async updateProfile(userId: string, dto: UpdateProfileDTO) {
     if (dto.username) {
       const existing = await this.prisma.user.findUnique({
         where: { username: dto.username },

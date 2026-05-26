@@ -1,11 +1,11 @@
-import { PaginationDto } from './pagination.dto';
+import { PaginationDTO } from './pagination.dto';
 
 export const paginate = async <T>(
   model: {
     findMany: (args: any) => Promise<T[]>;
     count: (args: any) => Promise<number>;
   },
-  dto: PaginationDto,
+  dto: PaginationDTO,
   args?: any,
 ) => {
   const [data, total] = await Promise.all([

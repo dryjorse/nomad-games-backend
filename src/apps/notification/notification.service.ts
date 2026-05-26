@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import {
-  CreateNotificationDto,
-  ReadNotificationsDto,
+  CreateNotificationDTO,
+  ReadNotificationsDTO,
 } from './notification.dto';
-import { PaginationDto } from 'src/common/pagination/pagination.dto';
+import { PaginationDTO } from 'src/common/pagination/pagination.dto';
 import { paginate } from 'src/common/pagination/paginate';
 import { AppGateway } from 'src/gateway/app.gateway';
 
@@ -15,7 +15,7 @@ export class NotificationService {
     private appGateway: AppGateway,
   ) {}
 
-  async getNotifications(userId: string, dto: PaginationDto) {
+  async getNotifications(userId: string, dto: PaginationDTO) {
     return paginate(this.prisma.notification, dto, {
       where: { userId },
       includes: { user: true },
@@ -24,7 +24,7 @@ export class NotificationService {
 
   async createNotification(
     userId: string,
-    dto: CreateNotificationDto,
+    dto: CreateNotificationDTO,
     sendMessageToUserId: string = dto.userId,
   ) {
     const notification = await this.prisma.notification.create({
@@ -43,7 +43,7 @@ export class NotificationService {
     return notification;
   }
 
-  async readNotifications(userId: string, dto: ReadNotificationsDto) {
+  async readNotifications(userId: string, dto: ReadNotificationsDTO) {
     return this.prisma.notification.updateMany({
       where: {
         id: { in: dto.notifications },

@@ -7,8 +7,8 @@ import {
 } from '@nestjs/common';
 import { AppGateway } from 'src/gateway/app.gateway';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { EditGameDto, MoveDto, OpenGameDto, RespondDrawDto } from './game.dto';
-import { PaginationDto } from 'src/common/pagination/pagination.dto';
+import { EditGameDTO, MoveDTO, OpenGameDTO, RespondDrawDTO } from './game.dto';
+import { PaginationDTO } from 'src/common/pagination/pagination.dto';
 import { paginate } from 'src/common/pagination/paginate';
 import { EnumSocketEvent } from 'src/common/types';
 import { NotificationService } from '../notification/notification.service';
@@ -21,7 +21,7 @@ export class GameService {
     private notificationService: NotificationService,
   ) {}
 
-  async getOpenGames(dto: PaginationDto, q?: string) {
+  async getOpenGames(dto: PaginationDTO, q?: string) {
     return paginate(this.prisma.game, dto, {
       where: {
         status: 'WAITING',
@@ -108,7 +108,7 @@ export class GameService {
     return updatedGame;
   }
 
-  async openGame(userId: string, openGameDto: OpenGameDto) {
+  async openGame(userId: string, openGameDTO: OpenGameDTO) {
     const isGameExists = await this.prisma.game.findFirst({
       where: {
         OR: [{ firstPlayerId: userId }, { secondPlayerId: userId }],
@@ -122,17 +122,17 @@ export class GameService {
       data: {
         firstPlayerId: userId,
         status: 'WAITING',
-        visibility: openGameDto.visibility,
-        firstPlayerRole: openGameDto.role,
+        visibility: openGameDTO.visibility,
+        firstPlayerRole: openGameDTO.role,
       },
     });
 
-    if (openGameDto.visibility === 'PUBLIC') this.pullPlayerFromQueue(game.id);
+    if (openGameDTO.visibility === 'PUBLIC') this.pullPlayerFromQueue(game.id);
 
     return game;
   }
 
-  async editGame(userId: string, dto: EditGameDto) {
+  async editGame(userId: string, dto: EditGameDTO) {
     const game = await this.prisma.game.findFirst({
       where: { firstPlayerId: userId, status: 'WAITING' },
     });
@@ -287,7 +287,7 @@ export class GameService {
     return startedGame;
   }
 
-  async move(userId: string, { cell }: MoveDto) {
+  async move(userId: string, { cell }: MoveDTO) {
     const game = await this.prisma.game.findFirst({
       where: {
         OR: [{ firstPlayerId: userId }, { secondPlayerId: userId }],
@@ -566,7 +566,7 @@ export class GameService {
     return { message: 'Запрос на ничью отправлен' };
   }
 
-  async respondDraw(userId: string, { accept }: RespondDrawDto) {
+  async respondDraw(userId: string, { accept }: RespondDrawDTO) {
     const game = await this.prisma.game.findFirst({
       where: {
         OR: [{ firstPlayerId: userId }, { secondPlayerId: userId }],
@@ -615,8 +615,8 @@ export class GameService {
     return { message: 'Вы отклонили запрос на ничью' };
   }
 
-  async getMyGames(userId: string) {
-    const games = await this.prisma.game.findMany({
+  async getMyGames(userId: string, dto: PaginationDTO) {
+    const games = await paginate(this.prisma.game, dto, {
       where: {
         OR: [{ firstPlayerId: userId }, { secondPlayerId: userId }],
         status: 'FINISHED',
@@ -647,22 +647,27 @@ export class GameService {
       },
     });
 
-    return games.map((game) => {
-      const rival =
-        game.firstPlayer.id === userId ? game.secondPlayer : game.firstPlayer;
+    return {
+      ...games,
+      results: games.results.map((game) => {
+        const rival =
+          game.firstPlayerId === userId
+            ? game.secondPlayerId
+            : game.firstPlayerId;
 
-      if (!rival) return { ...game, rival: null };
+        if (!rival) return { ...game, rival: null };
 
-      const { friends, friendOf, ...rivalData } = rival as any;
+        const { friends, friendOf, ...rivalData } = rival as any;
 
-      return {
-        id: game.id,
-        winnerId: game.winnerId,
-        rival: {
-          ...rivalData,
-          isFriend: friends.length > 0 || friendOf.length > 0,
-        },
-      };
-    });
+        return {
+          id: game.id,
+          winnerId: game.winnerId,
+          rival: {
+            ...rivalData,
+            isFriend: friends.length > 0 || friendOf.length > 0,
+          },
+        };
+      }),
+    };
   }
 }
